@@ -1,0 +1,131 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "Private user credentials and account metadata",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Authentication UID",
+          "maxLength": 128
+        },
+        "email": {
+          "type": "string",
+          "description": "Google Gmail account address",
+          "maxLength": 254
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "ISO timestamp of account registration"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "ISO timestamp of account profile update"
+        }
+      },
+      "required": ["userId", "email"]
+    },
+    "PublicProfile": {
+      "title": "PublicProfile",
+      "description": "Public O/L student profile for the level-based leaderboard and AI tutor interactions",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Unique user ID",
+          "maxLength": 128
+        },
+        "nickname": {
+          "type": "string",
+          "description": "Customizable candidate display nickname",
+          "maxLength": 24,
+          "minLength": 2
+        },
+        "level": {
+          "type": "number",
+          "description": "Current student level based on accumulated XP"
+        },
+        "xp": {
+          "type": "number",
+          "description": "Total revision XP points"
+        },
+        "streak": {
+          "type": "number",
+          "description": "Active consecutive revision days streak"
+        },
+        "olGrade": {
+          "type": "string",
+          "description": "O/L student grade tier (e.g., Grade 10, Grade 11, or O/L Candidate)",
+          "maxLength": 32
+        },
+        "badgeTitle": {
+          "type": "string",
+          "description": "Earned badge tier title",
+          "maxLength": 64
+        },
+        "avatarSeed": {
+          "type": "string",
+          "description": "Short avatar letters or initials",
+          "maxLength": 4
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Timestamp of profile change"
+        }
+      },
+      "required": ["userId", "nickname", "level", "xp", "streak", "olGrade", "badgeTitle", "avatarSeed"]
+    },
+    "UserSettings": {
+      "title": "UserSettings",
+      "description": "User GUI and webpage appearance customization settings",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Target user ID",
+          "maxLength": 128
+        },
+        "themeMode": {
+          "type": "string",
+          "description": "Color mode selection",
+          "enum": ["dark", "light"]
+        },
+        "palette": {
+          "type": "string",
+          "description": "Predefined aesthetic palette theme",
+          "enum": ["monochrome", "paper-ink", "nordic-slate", "high-contrast", "warm-terminal"]
+        },
+        "accentColor": {
+          "type": "string",
+          "description": "User chosen GUI highlight/accent color",
+          "maxLength": 32
+        },
+        "fontSize": {
+          "type": "string",
+          "description": "User GUI font sizing preference",
+          "enum": ["compact", "standard", "large"]
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Timestamp of settings save"
+        }
+      },
+      "required": ["userId", "themeMode", "palette", "accentColor"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Isolated private user account info restricted to owner"
+    },
+    "/publicProfiles/{userId}": {
+      "schema": "PublicProfile",
+      "description": "Public O/L student profiles queried for level-based leaderboards"
+    },
+    "/userSettings/{userId}": {
+      "schema": "UserSettings",
+      "description": "Private student appearance and color customizations"
+    }
+  }
+}

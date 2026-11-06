@@ -1,0 +1,107 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Global default-deny safety net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() > 0 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    // Entity Validations
+    function isValidUser(data) {
+      return data.keys().hasAll(['userId', 'email'])
+        && data.keys().hasOnly(['userId', 'email', 'createdAt', 'updatedAt'])
+        && data.userId == request.auth.uid
+        && data.email is string
+        && data.email.size() > 0
+        && data.email.size() <= 254;
+    }
+
+    function isValidPublicProfile(data) {
+      return data.keys().hasAll(['userId', 'nickname', 'level', 'xp', 'streak', 'olGrade', 'badgeTitle', 'avatarSeed'])
+        && data.keys().hasOnly(['userId', 'nickname', 'level', 'xp', 'streak', 'olGrade', 'badgeTitle', 'avatarSeed', 'updatedAt'])
+        && data.userId == request.auth.uid
+        && data.nickname is string
+        && data.nickname.size() >= 2
+        && data.nickname.size() <= 24
+        && data.level is number
+        && data.level >= 1
+        && data.level <= 99
+        && data.xp is number
+        && data.xp >= 0
+        && data.streak is number
+        && data.streak >= 0
+        && data.olGrade is string
+        && data.olGrade.size() <= 32
+        && data.badgeTitle is string
+        && data.badgeTitle.size() <= 64
+        && data.avatarSeed is string
+        && data.avatarSeed.size() <= 4;
+    }
+
+    function isValidUserSettings(data) {
+      return data.keys().hasAll(['userId', 'themeMode', 'palette', 'accentColor'])
+        && data.keys().hasOnly(['userId', 'themeMode', 'palette', 'accentColor', 'fontSize', 'updatedAt'])
+        && data.userId == request.auth.uid
+        && data.themeMode in ['dark', 'light']
+        && data.palette in ['monochrome', 'paper-ink', 'nordic-slate', 'high-contrast', 'warm-terminal']
+        && data.accentColor is string
+        && data.accentColor.size() <= 32;
+    }
+
+    // Collection: Users (Isolated private PII data)
+    match /users/{userId} {
+      allow get: if isOwner(userId) && isValidId(userId);
+      allow list: if false; // Deny query scraping of private emails
+      allow create: if isOwner(userId) && isValidId(userId) && isValidUser(incoming());
+      allow update: if isOwner(userId) && isValidId(userId) && isValidUser(incoming()) && incoming().userId == existing().userId;
+      allow delete: if false;
+    }
+
+    // Collection: Public Profiles (Level-based leaderboard for O/L students)
+    match /publicProfiles/{userId} {
+      allow get, list: if true; // Public leaderboard visibility
+      allow create: if isOwner(userId) && isValidId(userId) && isValidPublicProfile(incoming());
+      allow update: if isOwner(userId)
+        && isValidId(userId)
+        && isValidPublicProfile(incoming())
+        && incoming().userId == existing().userId
+        && incoming().diff(existing()).affectedKeys().hasOnly(['nickname', 'level', 'xp', 'streak', 'olGrade', 'badgeTitle', 'avatarSeed', 'updatedAt']);
+      allow delete: if false;
+    }
+
+    // Collection: User Settings (Custom webpage & GUI appearance)
+    match /userSettings/{userId} {
+      allow get: if isOwner(userId) && isValidId(userId);
+      allow list: if false;
+      allow create: if isOwner(userId) && isValidId(userId) && isValidUserSettings(incoming());
+      allow update: if isOwner(userId)
+        && isValidId(userId)
+        && isValidUserSettings(incoming())
+        && incoming().userId == existing().userId
+        && incoming().diff(existing()).affectedKeys().hasOnly(['themeMode', 'palette', 'accentColor', 'fontSize', 'updatedAt']);
+      allow delete: if false;
+    }
+  }
+}
