@@ -29,7 +29,7 @@ const iconMap: Record<string, React.FC<{ className?: string }>> = {
 };
 
 export const DashboardHub: React.FC = () => {
-  const { xp, streak, setActiveView, setActiveSubjectId, quests, claimQuestReward, nickname, olGrade } = useApp();
+  const { xp, streak, setActiveView, setActiveSubjectId, quests, claimQuestReward, nickname, olGrade, primarySubjectId } = useApp();
   const levelInfo = calculateLevelAndProgress(xp);
   const streakMultiplier = calculateStreakMultiplier(streak);
 
@@ -159,35 +159,47 @@ export const DashboardHub: React.FC = () => {
             <h2 className="text-base font-bold theme-text-primary tracking-tight flex items-center gap-2">
               <span>Edexcel IGCSE Subjects</span>
               <span className="text-xs font-mono theme-text-muted font-normal">
-                (6 Enrolled)
+                ({SUBJECTS.length} Subjects · Gateway College 11A Timetable)
               </span>
             </h2>
             <p className="text-xs theme-text-secondary">
-              Syllabus specifications, checkpoint questions, and examiner notes
+              Syllabus specifications, checkpoint questions, past papers, and examiner notes
             </p>
           </div>
 
-          <button
-            onClick={() => setActiveView('vault')}
-            className="self-start sm:self-auto text-xs font-mono theme-text-secondary hover:theme-text-primary flex items-center gap-1 cursor-pointer"
-          >
-            <span>Open Vault</span>
-            <ChevronRight className="w-3.5 h-3.5" />
-          </button>
+          <div className="flex items-center gap-3 self-start sm:self-auto">
+            <button
+              onClick={() => setActiveView('pastpapers')}
+              className="text-xs font-mono theme-text-secondary hover:theme-text-primary flex items-center gap-1 cursor-pointer"
+            >
+              <span>PaperLords Past Papers</span>
+              <ChevronRight className="w-3.5 h-3.5" />
+            </button>
+            <button
+              onClick={() => setActiveView('vault')}
+              className="text-xs font-mono theme-text-secondary hover:theme-text-primary flex items-center gap-1 cursor-pointer"
+            >
+              <span>Open Vault</span>
+              <ChevronRight className="w-3.5 h-3.5" />
+            </button>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5">
           {SUBJECTS.map((subject) => {
             const IconComponent = iconMap[subject.iconName] || Atom;
+            const isPrimary = subject.id === primarySubjectId;
 
             return (
               <div
                 key={subject.id}
-                className="rounded-lg border theme-border theme-card p-4 hover:border-zinc-400 transition-colors flex flex-col justify-between shadow-xs"
+                className={`rounded-lg border theme-border theme-card p-4 hover:border-zinc-400 transition-colors flex flex-col justify-between shadow-xs ${
+                  isPrimary ? 'ring-1 ring-white/30' : ''
+                }`}
               >
                 <div>
                   {/* Header info */}
-                  <div className="flex items-start justify-between gap-3 mb-3">
+                  <div className="flex items-start justify-between gap-3 mb-2.5">
                     <div className="flex items-center gap-3">
                       <div className="w-8 h-8 rounded border theme-border theme-subtle flex items-center justify-center theme-text-primary">
                         <IconComponent className="w-4 h-4" />
@@ -196,7 +208,12 @@ export const DashboardHub: React.FC = () => {
                         <div className="flex items-center gap-1.5 text-[10px] font-mono theme-text-muted">
                           <span className="font-bold theme-text-primary">{subject.code}</span>
                           <span aria-hidden="true">·</span>
-                          <span>Edexcel</span>
+                          <span>{subject.department}</span>
+                          {isPrimary && (
+                            <span className="text-[9px] px-1.5 py-0.2 rounded font-semibold theme-accent-btn">
+                              Primary
+                            </span>
+                          )}
                         </div>
                         <h3 className="text-sm font-bold theme-text-primary">
                           {subject.name}
@@ -208,6 +225,14 @@ export const DashboardHub: React.FC = () => {
                       {subject.progressPercent}%
                     </span>
                   </div>
+
+                  {/* Teacher & Room pill */}
+                  {(subject.teacher || subject.room) && (
+                    <div className="flex items-center justify-between text-[10px] font-mono theme-text-muted px-2 py-1 rounded theme-subtle mb-3">
+                      <span>{subject.teacher ? `Teacher: ${subject.teacher}` : ''}</span>
+                      <span>{subject.room || ''}</span>
+                    </div>
+                  )}
 
                   {/* Progress bar */}
                   <div className="w-full h-1.5 rounded-full theme-subtle overflow-hidden mb-3">

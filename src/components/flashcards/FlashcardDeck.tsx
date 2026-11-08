@@ -42,12 +42,12 @@ export const FlashcardDeck: React.FC<FlashcardDeckProps> = ({
   const allCards = customCards || DEFAULT_FLASHCARDS;
   const [selectedSubject, setSelectedSubject] = useState<SubjectId | 'all'>(() => {
     if (customCards && customCards.length > 0) {
-      return customCards[0].subject || 'all';
+      return customCards[0].subjectId || 'all';
     }
     return initialSubjectId === 'all' ? activeSubjectId : initialSubjectId;
   });
   const [deck, setDeck] = useState<Flashcard[]>(() => {
-    const subj = customCards && customCards.length > 0 ? (customCards[0].subject || 'all') : (initialSubjectId === 'all' ? activeSubjectId : initialSubjectId);
+    const subj = customCards && customCards.length > 0 ? (customCards[0].subjectId || 'all') : (initialSubjectId === 'all' ? activeSubjectId : initialSubjectId);
     return filterCardsBySubject(allCards, subj);
   });
   const [currentIndex, setCurrentIndex] = useState<number>(0);
@@ -59,7 +59,7 @@ export const FlashcardDeck: React.FC<FlashcardDeckProps> = ({
   // Update deck when subject or source cards change
   useEffect(() => {
     if (customCards && customCards.length > 0) {
-      const targetSubj = customCards[0].subject || 'all';
+      const targetSubj = customCards[0].subjectId || 'all';
       setSelectedSubject(targetSubj);
       setDeck(filterCardsBySubject(customCards, targetSubj));
     } else {

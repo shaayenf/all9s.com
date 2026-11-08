@@ -16,6 +16,8 @@ import { SettingsView } from './components/settings/SettingsView';
 import { UserProfile } from './components/profile/UserProfile';
 import { AuthGateway } from './components/auth/AuthGateway';
 import { OpencodeDrawer } from './components/ai/OpencodeDrawer';
+import { StudentFeedSection } from './components/feed/StudentFeedSection';
+import { PastPapersSection } from './components/pastpapers/PastPapersSection';
 
 const AppContent: React.FC = () => {
   const { activeView, setActiveView } = useApp();
@@ -33,6 +35,8 @@ const AppContent: React.FC = () => {
         {/* Dynamic Viewports */}
         {activeView === 'dashboard' && <DashboardHub />}
         {activeView === 'vault' && <RevisionVault />}
+        {activeView === 'feed' && <StudentFeedSection />}
+        {activeView === 'pastpapers' && <PastPapersSection />}
         {activeView === 'lingua' && <LinguaTerminal />}
         {activeView === 'exam' && <ExamSimulatorArena />}
         {activeView === 'rewards' && <RewardsQuestsHub />}
@@ -64,6 +68,18 @@ const AppContent: React.FC = () => {
               className="hover:opacity-100 opacity-75 transition-opacity cursor-pointer"
             >
               Revision Vault
+            </button>
+            <button
+              onClick={() => setActiveView('feed')}
+              className="hover:opacity-100 opacity-75 transition-opacity cursor-pointer"
+            >
+              Student Feed
+            </button>
+            <button
+              onClick={() => setActiveView('pastpapers')}
+              className="hover:opacity-100 opacity-75 transition-opacity cursor-pointer"
+            >
+              Past Papers
             </button>
             <button
               onClick={() => setActiveView('lingua')}

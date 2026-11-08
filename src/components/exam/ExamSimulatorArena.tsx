@@ -19,7 +19,7 @@ import {
 } from 'lucide-react';
 
 export const ExamSimulatorArena: React.FC = () => {
-  const { activeExamPaperId, setActiveExamPaperId, triggerOpencodeWithPrompt } = useApp();
+  const { activeExamPaperId, setActiveExamPaperId, triggerOpencodeWithPrompt, setActiveView } = useApp();
 
   // Filters for repository
   const [filterSubject, setFilterSubject] = useState<string>('all');
@@ -110,28 +110,38 @@ export const ExamSimulatorArena: React.FC = () => {
           </p>
         </div>
 
-        {/* View mode toggle */}
-        <div className="flex items-center gap-1.5 p-1 rounded-lg border theme-border theme-subtle">
+        {/* View mode toggle + PaperLords Hub link */}
+        <div className="flex flex-wrap items-center gap-2">
           <button
-            onClick={() => setInSimulatorMode(false)}
-            className={`px-3 py-1 text-xs font-mono rounded transition-all cursor-pointer ${
-              !inSimulatorMode
-                ? 'theme-accent-btn font-bold shadow-xs'
-                : 'theme-text-secondary hover:theme-text-primary'
-            }`}
+            onClick={() => setActiveView('pastpapers')}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border theme-border theme-card text-xs font-mono font-medium theme-text-primary hover:theme-accent-btn transition-colors cursor-pointer"
           >
-            Repository
+            <FileText className="w-3.5 h-3.5 opacity-70" />
+            <span>PaperLords Archive</span>
           </button>
-          <button
-            onClick={() => setInSimulatorMode(true)}
-            className={`px-3 py-1 text-xs font-mono rounded transition-all cursor-pointer ${
-              inSimulatorMode
-                ? 'theme-accent-btn font-bold shadow-xs'
-                : 'theme-text-secondary hover:theme-text-primary'
-            }`}
-          >
-            Active Simulator
-          </button>
+
+          <div className="flex items-center gap-1.5 p-1 rounded-lg border theme-border theme-subtle">
+            <button
+              onClick={() => setInSimulatorMode(false)}
+              className={`px-3 py-1 text-xs font-mono rounded transition-all cursor-pointer ${
+                !inSimulatorMode
+                  ? 'theme-accent-btn font-bold shadow-xs'
+                  : 'theme-text-secondary hover:theme-text-primary'
+              }`}
+            >
+              Repository
+            </button>
+            <button
+              onClick={() => setInSimulatorMode(true)}
+              className={`px-3 py-1 text-xs font-mono rounded transition-all cursor-pointer ${
+                inSimulatorMode
+                  ? 'theme-accent-btn font-bold shadow-xs'
+                  : 'theme-text-secondary hover:theme-text-primary'
+              }`}
+            >
+              Active Simulator
+            </button>
+          </div>
         </div>
       </div>
 

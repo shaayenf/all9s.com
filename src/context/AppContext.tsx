@@ -24,6 +24,7 @@ import {
   changePomodoroSubject,
   completeFocusSession,
   playChimeSound,
+  INITIAL_SUBJECT_STATS,
 } from '../utils/pomodoro';
 
 interface AppContextType {
@@ -43,8 +44,10 @@ interface AppContextType {
   setNickname: (name: string) => Promise<void>;
   olGrade: string;
   setOlGrade: (grade: string) => Promise<void>;
+  primarySubjectId: SubjectId;
+  setPrimarySubject: (subjectId: SubjectId) => Promise<void>;
   hasCompletedOnboarding: boolean;
-  completeOnboarding: (customNickname: string, chosenGrade: string) => Promise<void>;
+  completeOnboarding: (customNickname: string, chosenSubject?: SubjectId, chosenGrade?: string) => Promise<void>;
   resetToLevelOne: () => Promise<void>;
 
   // GUI & Appearance Settings
@@ -104,7 +107,14 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [activeView, setActiveView] = useState<AppView>('dashboard');
-  const [activeSubjectId, setActiveSubjectId] = useState<SubjectId>('physics');
+  const [activeSubjectId, setActiveSubjectId] = useState<SubjectId>(() => {
+    const saved = localStorage.getItem('all9s_primary_subject') as SubjectId;
+    return saved || 'physics';
+  });
+  const [primarySubjectId, setPrimarySubjectState] = useState<SubjectId>(() => {
+    const saved = localStorage.getItem('all9s_primary_subject') as SubjectId;
+    return saved || 'physics';
+  });
 
   // Auth & Profile
   const [user, setUser] = useState<FirebaseUser | null>(null);
@@ -175,6 +185,11 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
             const data = profileDoc.data();
             if (data.nickname) setNicknameState(data.nickname);
             if (data.olGrade) setOlGradeState(data.olGrade);
+            if (data.primarySubjectId) {
+              setPrimarySubjectState(data.primarySubjectId as SubjectId);
+              setActiveSubjectId(data.primarySubjectId as SubjectId);
+              localStorage.setItem('all9s_primary_subject', data.primarySubjectId);
+            }
             if (typeof data.xp === 'number') {
               setXp(data.xp);
               localStorage.setItem('all9s_student_xp', data.xp.toString());
@@ -193,8 +208,13 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
             setHasCompletedOnboarding(false);
             localStorage.removeItem('all9s_onboarding_completed');
           }
-        } catch (err) {
-          handleFirestoreError(err, OperationType.GET, profilePath);
+        } catch (err: any) {
+          if (err?.message?.includes('offline') || err?.code === 'unavailable') {
+            console.warn('Firestore temporarily offline, using cached local student profile.');
+            setHasCompletedOnboarding(localStorage.getItem('all9s_onboarding_completed') === 'true');
+          } else {
+            handleFirestoreError(err, OperationType.GET, profilePath);
+          }
         }
 
         // Fetch user custom GUI settings
@@ -208,8 +228,12 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
               ...data,
             }));
           }
-        } catch (err) {
-          handleFirestoreError(err, OperationType.GET, settingsPath);
+        } catch (err: any) {
+          if (err?.message?.includes('offline') || err?.code === 'unavailable') {
+            console.warn('Firestore temporarily offline, using cached GUI settings.');
+          } else {
+            handleFirestoreError(err, OperationType.GET, settingsPath);
+          }
         }
       }
     });
@@ -245,7 +269,11 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         setFirestoreLeaderboard(users);
       },
       (error) => {
-        handleFirestoreError(error, OperationType.LIST, 'publicProfiles');
+        if (error?.message?.includes('offline') || error?.code === 'unavailable') {
+          console.warn('Leaderboard snapshot listener offline, using fallback rankings.');
+        } else {
+          handleFirestoreError(error, OperationType.LIST, 'publicProfiles');
+        }
       }
     );
 
@@ -347,17 +375,25 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     }
   };
 
-  const completeOnboarding = async (customNickname: string, chosenGrade: string) => {
+  const completeOnboarding = async (
+    customNickname: string,
+    chosenSubject: SubjectId = 'physics',
+    chosenGrade: string = 'Grade 11'
+  ) => {
     const cleanNick = customNickname.trim().slice(0, 24) || 'Candidate_1';
     const cleanGrade = chosenGrade || 'Grade 11';
+    const cleanSubject = chosenSubject || 'physics';
 
     setNicknameState(cleanNick);
     setOlGradeState(cleanGrade);
+    setPrimarySubjectState(cleanSubject);
+    setActiveSubjectId(cleanSubject);
     setXp(0);
     setStreak(1);
     setHasCompletedOnboarding(true);
     localStorage.setItem('all9s_onboarding_completed', 'true');
     localStorage.setItem('all9s_student_xp', '0');
+    localStorage.setItem('all9s_primary_subject', cleanSubject);
 
     if (user) {
       const profilePath = `publicProfiles/${user.uid}`;
@@ -369,6 +405,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
           xp: 0,
           streak: 1,
           olGrade: cleanGrade,
+          primarySubjectId: cleanSubject,
           badgeTitle: 'Grade 7 Novice',
           avatarSeed: cleanNick.slice(0, 2).toUpperCase(),
           updatedAt: new Date().toISOString(),
@@ -380,8 +417,38 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString(),
         });
-      } catch (err) {
-        handleFirestoreError(err, OperationType.WRITE, profilePath);
+      } catch (err: any) {
+        if (err?.message?.includes('offline') || err?.code === 'unavailable') {
+          console.warn('Firestore offline while saving profile during onboarding');
+        } else {
+          handleFirestoreError(err, OperationType.WRITE, profilePath);
+        }
+      }
+    }
+  };
+
+  const setPrimarySubject = async (subjectId: SubjectId) => {
+    setPrimarySubjectState(subjectId);
+    setActiveSubjectId(subjectId);
+    localStorage.setItem('all9s_primary_subject', subjectId);
+
+    if (user) {
+      const path = `publicProfiles/${user.uid}`;
+      try {
+        await setDoc(
+          doc(db, 'publicProfiles', user.uid),
+          {
+            primarySubjectId: subjectId,
+            updatedAt: new Date().toISOString(),
+          },
+          { merge: true }
+        );
+      } catch (err: any) {
+        if (err?.message?.includes('offline') || err?.code === 'unavailable') {
+          console.warn('Firestore offline while updating primary subject');
+        } else {
+          handleFirestoreError(err, OperationType.UPDATE, path);
+        }
       }
     }
   };
@@ -621,14 +688,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const clearPomodoroHistory = () => {
     setPomodoro((prev) => ({
       ...prev,
-      subjectStats: {
-        physics: 0,
-        chemistry: 0,
-        biology: 0,
-        maths: 0,
-        french: 0,
-        ict: 0,
-      },
+      subjectStats: { ...INITIAL_SUBJECT_STATS },
       sessionHistory: [],
     }));
   };
@@ -649,6 +709,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         setNickname,
         olGrade,
         setOlGrade,
+        primarySubjectId,
+        setPrimarySubject,
         hasCompletedOnboarding,
         completeOnboarding,
         resetToLevelOne,

@@ -1,6 +1,29 @@
-export type AppView = 'dashboard' | 'vault' | 'lingua' | 'exam' | 'rewards' | 'settings' | 'profile';
+export type AppView = 'dashboard' | 'vault' | 'feed' | 'pastpapers' | 'lingua' | 'exam' | 'rewards' | 'settings' | 'profile';
 
-export type SubjectId = 'physics' | 'chemistry' | 'biology' | 'maths' | 'french' | 'ict';
+export type SubjectId =
+  | 'physics'
+  | 'chemistry'
+  | 'biology'
+  | 'human_biology'
+  | 'maths'
+  | 'further_pure_maths'
+  | 'extra_maths'
+  | 'english_language'
+  | 'english_literature'
+  | 'extra_english'
+  | 'economics'
+  | 'business_studies'
+  | 'accounting'
+  | 'computer_science'
+  | 'history'
+  | 'geography'
+  | 'art'
+  | 'psychology'
+  | 'french'
+  | 'sinhala'
+  | 'music'
+  | 'sport'
+  | 'ict';
 
 export type OLGradeFilter = 'all' | 'grade_10' | 'grade_11' | 'candidates';
 
@@ -20,18 +43,24 @@ export interface UserProfile {
   email: string;
   nickname: string;
   photoURL?: string;
-  olGrade: string; // e.g. "Grade 10", "Grade 11", "O/L Candidate"
+  olGrade: string; // e.g. "Grade 11", "11A Gateway College", "O/L Candidate"
   level: number;
   xp: number;
   streak: number;
   badgeTitle: string;
   avatarSeed: string;
+  primarySubjectId?: SubjectId;
+  enrolledSubjectIds?: SubjectId[];
 }
 
 export interface SubjectInfo {
   id: SubjectId;
   code: string; // e.g. "4PH1"
   name: string;
+  shortName?: string; // e.g. "Phy", "Chem", "Bio"
+  teacher?: string; // e.g. "Dinum", "Nipuni"
+  room?: string; // e.g. "Phy Lab", "Chem Lab", "11A"
+  department?: 'Sciences' | 'Mathematics' | 'Languages' | 'Commerce' | 'Humanities' | 'Creative & Applied';
   iconName: string;
   color: string;
   progressPercent: number;
@@ -63,6 +92,42 @@ export interface SpecModule {
   title: string;
   sectionNumber: number;
   subtopics: SpecSubtopic[];
+}
+
+export interface PaperLordsQuestion {
+  number: string;
+  topic: string;
+  marks: number;
+  questionText: string;
+  markSchemePoints: string[];
+  examinerTip?: string;
+}
+
+export interface PaperLordsPaper {
+  id: string;
+  subjectId: SubjectId;
+  subjectCode: string; // e.g. "4PH1"
+  subjectName: string;
+  year: number;
+  session: 'June' | 'January' | 'November' | 'Specimen';
+  paperCode: string; // e.g. "4PH1/1P", "4MA1/1H"
+  paperName: string; // e.g. "Paper 1P: Forces, Energy & Waves"
+  tier: 'Higher' | 'Foundation' | 'Standard';
+  durationMinutes: number;
+  totalMarks: number;
+  isRegional?: boolean;
+  paperlordsSlug: string;
+  paperlordsUrl: string;
+  gradeBoundaries?: {
+    grade9: number;
+    grade8: number;
+    grade7: number;
+    grade6: number;
+    grade4: number;
+  };
+  keyTopics: string[];
+  examinerWarnings: string[];
+  sampleQuestions: PaperLordsQuestion[];
 }
 
 export interface PastPaper {

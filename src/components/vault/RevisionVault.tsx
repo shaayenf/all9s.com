@@ -159,7 +159,7 @@ export const RevisionVault: React.FC = () => {
           }`}
         >
           <Share2 className="w-3.5 h-3.5" />
-          <span>Gemini Notebook & Student Feed (Share, Like & Fork)</span>
+          <span>Student Feed</span>
         </button>
       </div>
 
@@ -167,7 +167,7 @@ export const RevisionVault: React.FC = () => {
       {vaultTab === 'flashcards' ? (
         <FlashcardDeck
           customCards={customFlashcards}
-          initialSubjectId={customFlashcards && customFlashcards[0] ? customFlashcards[0].subject : activeSubjectId}
+          initialSubjectId={customFlashcards && customFlashcards[0] ? customFlashcards[0].subjectId : activeSubjectId}
         />
       ) : vaultTab === 'notebook' ? (
         <RevisionNotebookHub

@@ -40,7 +40,7 @@ service cloud.firestore {
 
     function isValidPublicProfile(data) {
       return data.keys().hasAll(['userId', 'nickname', 'level', 'xp', 'streak', 'olGrade', 'badgeTitle', 'avatarSeed'])
-        && data.keys().hasOnly(['userId', 'nickname', 'level', 'xp', 'streak', 'olGrade', 'badgeTitle', 'avatarSeed', 'updatedAt'])
+        && data.keys().hasOnly(['userId', 'nickname', 'level', 'xp', 'streak', 'olGrade', 'badgeTitle', 'avatarSeed', 'primarySubjectId', 'updatedAt'])
         && data.userId == request.auth.uid
         && data.nickname is string
         && data.nickname.size() >= 2
@@ -57,7 +57,8 @@ service cloud.firestore {
         && data.badgeTitle is string
         && data.badgeTitle.size() <= 64
         && data.avatarSeed is string
-        && data.avatarSeed.size() <= 4;
+        && data.avatarSeed.size() <= 4
+        && (!('primarySubjectId' in data) || (data.primarySubjectId is string && data.primarySubjectId.size() <= 32));
     }
 
     function isValidUserSettings(data) {
@@ -87,7 +88,7 @@ service cloud.firestore {
         && isValidId(userId)
         && isValidPublicProfile(incoming())
         && incoming().userId == existing().userId
-        && incoming().diff(existing()).affectedKeys().hasOnly(['nickname', 'level', 'xp', 'streak', 'olGrade', 'badgeTitle', 'avatarSeed', 'updatedAt']);
+        && incoming().diff(existing()).affectedKeys().hasOnly(['nickname', 'level', 'xp', 'streak', 'olGrade', 'badgeTitle', 'avatarSeed', 'primarySubjectId', 'updatedAt']);
       allow delete: if false;
     }
 

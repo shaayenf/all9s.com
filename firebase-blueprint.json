@@ -69,6 +69,11 @@
           "description": "Short avatar letters or initials",
           "maxLength": 4
         },
+        "primarySubjectId": {
+          "type": "string",
+          "description": "Primary revision subject selected from class timetable",
+          "maxLength": 32
+        },
         "updatedAt": {
           "type": "string",
           "description": "Timestamp of profile change"

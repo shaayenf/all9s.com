@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useApp } from '../../context/AppContext';
+import { SUBJECTS } from '../../data/mockData';
+import { SubjectId } from '../../types';
 import {
   User,
   ShieldCheck,
@@ -12,6 +14,7 @@ import {
   Bot,
   AlertCircle,
   GraduationCap,
+  BookOpen,
 } from 'lucide-react';
 
 export const UserProfile: React.FC = () => {
@@ -23,6 +26,8 @@ export const UserProfile: React.FC = () => {
     setNickname,
     olGrade,
     setOlGrade,
+    primarySubjectId,
+    setPrimarySubject,
     level,
     levelTitle,
     xp,
@@ -35,6 +40,7 @@ export const UserProfile: React.FC = () => {
 
   const [inputNickname, setInputNickname] = useState(nickname);
   const [saveStatus, setSaveStatus] = useState<'idle' | 'saved' | 'error'>('idle');
+  const [subjectSaved, setSubjectSaved] = useState(false);
   const [showResetConfirm, setShowResetConfirm] = useState(false);
 
   // Find user's live rank on leaderboard
@@ -284,6 +290,71 @@ export const UserProfile: React.FC = () => {
                   </div>
                 </div>
               </div>
+            </div>
+          </section>
+
+          {/* 3. Primary Timetable Subject Section (11A Gateway College Roster) */}
+          <section className="rounded-lg border theme-border theme-card p-6 space-y-5 shadow-xs">
+            <div className="flex items-center justify-between pb-3 border-b theme-border">
+              <div className="flex items-center gap-2">
+                <BookOpen className="w-4 h-4 theme-accent-text" />
+                <div>
+                  <h2 className="text-base font-bold theme-text-primary">
+                    Primary Revision Subject
+                  </h2>
+                  <p className="text-xs theme-text-muted font-mono mt-0.5">
+                    11A Gateway College Timetable Courses (22 available)
+                  </p>
+                </div>
+              </div>
+
+              {subjectSaved && (
+                <span className="text-[11px] font-mono px-2 py-0.5 rounded border border-emerald-500/30 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
+                  Updated!
+                </span>
+              )}
+            </div>
+
+            <p className="text-xs theme-text-secondary leading-relaxed">
+              Your primary subject sets the default syllabus vault, formula sheets, past paper collections, and Opencode tutoring mode. You can switch to any timetable subject anytime:
+            </p>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-60 overflow-y-auto p-1 border theme-border rounded bg-zinc-950/20">
+              {SUBJECTS.map((sub) => {
+                const isSelected = (primarySubjectId || 'physics') === sub.id;
+                return (
+                  <button
+                    type="button"
+                    key={sub.id}
+                    onClick={async () => {
+                      await setPrimarySubject(sub.id as SubjectId);
+                      setSubjectSaved(true);
+                      setTimeout(() => setSubjectSaved(false), 2000);
+                    }}
+                    className={`p-2.5 rounded border text-left font-mono transition-all cursor-pointer flex flex-col justify-between ${
+                      isSelected
+                        ? 'theme-accent-btn shadow-xs ring-1 ring-white/20'
+                        : 'theme-card border-zinc-800/80 hover:border-zinc-600'
+                    }`}
+                  >
+                    <div className="flex items-start justify-between gap-1 mb-1">
+                      <span className="text-xs font-bold truncate">
+                        {sub.name}
+                      </span>
+                      <span className={`text-[10px] px-1.5 py-0.2 rounded font-mono ${
+                        isSelected ? 'bg-black/30 text-white' : 'theme-subtle theme-text-muted'
+                      }`}>
+                        {sub.code}
+                      </span>
+                    </div>
+
+                    <div className="flex items-center justify-between text-[10px] opacity-80 pt-1 border-t border-white/10">
+                      <span>{sub.teacher ? `Teacher: ${sub.teacher}` : sub.department}</span>
+                      {sub.room && <span>{sub.room}</span>}
+                    </div>
+                  </button>
+                );
+              })}
             </div>
           </section>
         </div>

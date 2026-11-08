@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useApp } from '../../context/AppContext';
-import { ThemePalette, FontSizeOption } from '../../types';
+import { ThemePalette, FontSizeOption, SubjectId } from '../../types';
+import { SUBJECTS } from '../../data/mockData';
 import {
   SlidersHorizontal,
   User,
@@ -13,6 +14,7 @@ import {
   Sparkles,
   ShieldCheck,
   Award,
+  BookOpen,
 } from 'lucide-react';
 
 export const SettingsView: React.FC = () => {
@@ -24,6 +26,8 @@ export const SettingsView: React.FC = () => {
     setNickname,
     olGrade,
     setOlGrade,
+    primarySubjectId,
+    setPrimarySubject,
     guiSettings,
     updateGuiSettings,
     level,
@@ -33,6 +37,7 @@ export const SettingsView: React.FC = () => {
 
   const [inputNickname, setInputNickname] = useState(nickname);
   const [nicknameSaved, setNicknameSaved] = useState(false);
+  const [subjectSaved, setSubjectSaved] = useState(false);
   const [customHex, setCustomHex] = useState(guiSettings.accentColor);
 
   const palettes: { id: ThemePalette; name: string; desc: string; sampleBg: string; sampleBorder: string }[] = [
@@ -309,6 +314,71 @@ export const SettingsView: React.FC = () => {
               </p>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* 2b. Primary Timetable Subject Picker (11A Gateway College Roster) */}
+      <section className="rounded-lg border theme-border theme-card p-6 space-y-5 shadow-xs">
+        <div className="flex items-center justify-between pb-3 border-b theme-border">
+          <div className="flex items-center gap-2">
+            <BookOpen className="w-4 h-4 theme-accent-text" />
+            <div>
+              <h2 className="text-base font-bold theme-text-primary">
+                Primary Timetable Subject (11A Roster)
+              </h2>
+              <p className="text-xs theme-text-muted font-mono mt-0.5">
+                Switch your primary revision subject anytime across all 22 subjects from the 11A timetable
+              </p>
+            </div>
+          </div>
+
+          {subjectSaved && (
+            <span className="text-[11px] font-mono px-2 py-0.5 rounded border border-emerald-500/30 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
+              Subject Updated!
+            </span>
+          )}
+        </div>
+
+        <p className="text-xs theme-text-secondary">
+          Changing your primary subject automatically redirects your workspace, past papers, formula sheets, and Opencode AI prompts to that subject.
+        </p>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
+          {SUBJECTS.map((sub) => {
+            const isSelected = (primarySubjectId || 'physics') === sub.id;
+            return (
+              <button
+                type="button"
+                key={sub.id}
+                onClick={async () => {
+                  await setPrimarySubject(sub.id as SubjectId);
+                  setSubjectSaved(true);
+                  setTimeout(() => setSubjectSaved(false), 2000);
+                }}
+                className={`p-3 rounded border text-left font-mono transition-all cursor-pointer flex flex-col justify-between ${
+                  isSelected
+                    ? 'theme-accent-btn shadow-xs ring-1 ring-white/20'
+                    : 'theme-card border-zinc-800/80 hover:border-zinc-600'
+                }`}
+              >
+                <div className="flex items-start justify-between gap-1 mb-1.5">
+                  <span className="text-xs font-bold truncate">
+                    {sub.name}
+                  </span>
+                  <span className={`text-[10px] px-1.5 py-0.2 rounded font-mono ${
+                    isSelected ? 'bg-black/30 text-white' : 'theme-subtle theme-text-muted'
+                  }`}>
+                    {sub.code}
+                  </span>
+                </div>
+
+                <div className="flex items-center justify-between text-[10px] opacity-80 pt-1 border-t border-white/10">
+                  <span>Teacher: {sub.teacher || sub.department}</span>
+                  {sub.room && <span>{sub.room}</span>}
+                </div>
+              </button>
+            );
+          })}
         </div>
       </section>
 

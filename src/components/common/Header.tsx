@@ -28,6 +28,8 @@ export const Header: React.FC = () => {
   const navItems: { view: AppView; label: string }[] = [
     { view: 'dashboard', label: 'Dashboard' },
     { view: 'vault', label: 'Revision Vault' },
+    { view: 'feed', label: 'Student Feed' },
+    { view: 'pastpapers', label: 'Past Papers' },
     { view: 'lingua', label: 'LinguaTerminal' },
     { view: 'exam', label: 'Exam Arena' },
     { view: 'rewards', label: 'O/L Leaderboard' },
