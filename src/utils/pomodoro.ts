@@ -52,6 +52,7 @@ export const SUBJECT_METADATA: Record<SubjectId, { name: string; code: string; s
   music: { name: 'BTEC Music', code: '4MU1', short: 'MUS' },
   sport: { name: 'BTEC Sport', code: '4PE1', short: 'SPT' },
   ict: { name: 'ICT', code: '4IT1', short: 'ICT' },
+  commerce: { name: 'Commerce', code: '4CM1', short: 'COMM' },
 };
 
 export const INITIAL_SUBJECT_STATS: Record<SubjectId, number> = {
@@ -78,6 +79,7 @@ export const INITIAL_SUBJECT_STATS: Record<SubjectId, number> = {
   music: 0,
   sport: 0,
   ict: 0,
+  commerce: 0,
 };
 
 /**

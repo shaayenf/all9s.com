@@ -40,7 +40,7 @@ service cloud.firestore {
 
     function isValidPublicProfile(data) {
       return data.keys().hasAll(['userId', 'nickname', 'level', 'xp', 'streak', 'olGrade', 'badgeTitle', 'avatarSeed'])
-        && data.keys().hasOnly(['userId', 'nickname', 'level', 'xp', 'streak', 'olGrade', 'badgeTitle', 'avatarSeed', 'primarySubjectId', 'updatedAt'])
+        && data.keys().hasOnly(['userId', 'nickname', 'level', 'xp', 'streak', 'olGrade', 'badgeTitle', 'avatarSeed', 'primarySubjectId', 'bio', 'unlockedBadges', 'friendIds', 'updatedAt'])
         && data.userId == request.auth.uid
         && data.nickname is string
         && data.nickname.size() >= 2
@@ -58,7 +58,10 @@ service cloud.firestore {
         && data.badgeTitle.size() <= 64
         && data.avatarSeed is string
         && data.avatarSeed.size() <= 4
-        && (!('primarySubjectId' in data) || (data.primarySubjectId is string && data.primarySubjectId.size() <= 32));
+        && (!('primarySubjectId' in data) || (data.primarySubjectId is string && data.primarySubjectId.size() <= 32))
+        && (!('bio' in data) || (data.bio is string && data.bio.size() <= 160))
+        && (!('unlockedBadges' in data) || (data.unlockedBadges is list && data.unlockedBadges.size() <= 50))
+        && (!('friendIds' in data) || (data.friendIds is list && data.friendIds.size() <= 200));
     }
 
     function isValidUserSettings(data) {
@@ -71,6 +74,44 @@ service cloud.firestore {
         && data.accentColor.size() <= 32;
     }
 
+    function isValidStudyRoom(data) {
+      return data.keys().hasAll(['roomId', 'subjectId', 'name', 'createdBy', 'creatorNickname'])
+        && data.keys().hasOnly(['roomId', 'subjectId', 'name', 'topic', 'createdBy', 'creatorNickname', 'meetLink', 'pomodoroRemainingSeconds', 'isPomodoroActive', 'createdAt', 'updatedAt'])
+        && data.roomId is string
+        && data.roomId.size() > 0
+        && data.roomId.size() <= 128
+        && data.subjectId is string
+        && data.subjectId.size() <= 32
+        && data.name is string
+        && data.name.size() > 0
+        && data.name.size() <= 64
+        && data.createdBy == request.auth.uid
+        && data.creatorNickname is string
+        && data.creatorNickname.size() <= 24
+        && (!('topic' in data) || (data.topic is string && data.topic.size() <= 100))
+        && (!('meetLink' in data) || data.meetLink == null || (data.meetLink is string && data.meetLink.size() <= 200))
+        && (!('pomodoroRemainingSeconds' in data) || (data.pomodoroRemainingSeconds is number && data.pomodoroRemainingSeconds >= 0))
+        && (!('isPomodoroActive' in data) || data.isPomodoroActive is bool);
+    }
+
+    function isValidStudyMessage(data) {
+      return data.keys().hasAll(['messageId', 'roomId', 'userId', 'nickname', 'text'])
+        && data.keys().hasOnly(['messageId', 'roomId', 'userId', 'nickname', 'avatarSeed', 'text', 'attachmentUrl', 'createdAt'])
+        && data.messageId is string
+        && data.messageId.size() > 0
+        && data.messageId.size() <= 128
+        && data.roomId is string
+        && data.roomId.size() <= 128
+        && data.userId == request.auth.uid
+        && data.nickname is string
+        && data.nickname.size() <= 24
+        && data.text is string
+        && data.text.size() > 0
+        && data.text.size() <= 1000
+        && (!('avatarSeed' in data) || (data.avatarSeed is string && data.avatarSeed.size() <= 4))
+        && (!('attachmentUrl' in data) || (data.attachmentUrl is string && data.attachmentUrl.size() <= 500000));
+    }
+
     // Collection: Users (Isolated private PII data)
     match /users/{userId} {
       allow get: if isOwner(userId) && isValidId(userId);
@@ -80,15 +121,15 @@ service cloud.firestore {
       allow delete: if false;
     }
 
-    // Collection: Public Profiles (Level-based leaderboard for O/L students)
+    // Collection: Public Profiles (Level-based leaderboard & friend search for O/L students)
     match /publicProfiles/{userId} {
-      allow get, list: if true; // Public leaderboard visibility
+      allow get, list: if true; // Public leaderboard and friend dossier visibility
       allow create: if isOwner(userId) && isValidId(userId) && isValidPublicProfile(incoming());
       allow update: if isOwner(userId)
         && isValidId(userId)
         && isValidPublicProfile(incoming())
         && incoming().userId == existing().userId
-        && incoming().diff(existing()).affectedKeys().hasOnly(['nickname', 'level', 'xp', 'streak', 'olGrade', 'badgeTitle', 'avatarSeed', 'primarySubjectId', 'updatedAt']);
+        && incoming().diff(existing()).affectedKeys().hasOnly(['nickname', 'level', 'xp', 'streak', 'olGrade', 'badgeTitle', 'avatarSeed', 'primarySubjectId', 'bio', 'unlockedBadges', 'friendIds', 'updatedAt']);
       allow delete: if false;
     }
 
@@ -103,6 +144,21 @@ service cloud.firestore {
         && incoming().userId == existing().userId
         && incoming().diff(existing()).affectedKeys().hasOnly(['themeMode', 'palette', 'accentColor', 'fontSize', 'updatedAt']);
       allow delete: if false;
+    }
+
+    // Collection: Study Rooms (Subject study spaces with Google Meet integration)
+    match /studyRooms/{roomId} {
+      allow get, list: if isSignedIn() && isValidId(roomId);
+      allow create: if isSignedIn() && isValidId(roomId) && isValidStudyRoom(incoming());
+      allow update: if isSignedIn() && isValidId(roomId) && isValidStudyRoom(incoming());
+      allow delete: if isSignedIn() && isValidId(roomId) && resource.data.createdBy == request.auth.uid;
+
+      // Subcollection: Study Room Discussion Messages & Homework Pictures
+      match /messages/{messageId} {
+        allow get, list: if isSignedIn() && isValidId(messageId);
+        allow create: if isSignedIn() && isValidId(messageId) && isValidStudyMessage(incoming());
+        allow update, delete: if isSignedIn() && isValidId(messageId) && resource.data.userId == request.auth.uid;
+      }
     }
   }
 }

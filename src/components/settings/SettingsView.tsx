@@ -373,7 +373,7 @@ export const SettingsView: React.FC = () => {
                 </div>
 
                 <div className="flex items-center justify-between text-[10px] opacity-80 pt-1 border-t border-white/10">
-                  <span>Teacher: {sub.teacher || sub.department}</span>
+                  <span>{sub.department}</span>
                   {sub.room && <span>{sub.room}</span>}
                 </div>
               </button>

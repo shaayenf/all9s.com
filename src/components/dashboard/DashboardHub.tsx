@@ -17,7 +17,13 @@ import {
   Languages,
   Terminal as TerminalIcon,
   Play,
+  Video,
+  Users,
+  ExternalLink,
+  FileText,
+  Camera,
 } from 'lucide-react';
+import { OFFICIAL_PAPERLORDS_IGCSE_URL } from '../../utils/paperlords';
 
 const iconMap: Record<string, React.FC<{ className?: string }>> = {
   Atom,
@@ -167,12 +173,30 @@ export const DashboardHub: React.FC = () => {
             </p>
           </div>
 
-          <div className="flex items-center gap-3 self-start sm:self-auto">
+          <div className="flex flex-wrap items-center gap-3 self-start sm:self-auto">
+            <a
+              href={OFFICIAL_PAPERLORDS_IGCSE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs font-mono text-emerald-400 hover:text-emerald-300 flex items-center gap-1 cursor-pointer font-bold px-2 py-0.5 rounded border border-emerald-500/30 bg-emerald-500/10"
+              title="Official PaperLords Edexcel IGCSE Past Paper Repository"
+            >
+              <span>PaperLords Repository</span>
+              <ExternalLink className="w-3.5 h-3.5" />
+            </a>
+            <button
+              onClick={() => setActiveView('study_rooms')}
+              className="text-xs font-mono theme-text-secondary hover:theme-text-primary flex items-center gap-1 cursor-pointer"
+            >
+              <Video className="w-3.5 h-3.5 opacity-80" />
+              <span>Study Rooms & Google Meet</span>
+              <ChevronRight className="w-3.5 h-3.5" />
+            </button>
             <button
               onClick={() => setActiveView('pastpapers')}
               className="text-xs font-mono theme-text-secondary hover:theme-text-primary flex items-center gap-1 cursor-pointer"
             >
-              <span>PaperLords Past Papers</span>
+              <span>Past Papers</span>
               <ChevronRight className="w-3.5 h-3.5" />
             </button>
             <button
@@ -226,11 +250,11 @@ export const DashboardHub: React.FC = () => {
                     </span>
                   </div>
 
-                  {/* Teacher & Room pill */}
-                  {(subject.teacher || subject.room) && (
+                  {/* Room pill */}
+                  {subject.room && (
                     <div className="flex items-center justify-between text-[10px] font-mono theme-text-muted px-2 py-1 rounded theme-subtle mb-3">
-                      <span>{subject.teacher ? `Teacher: ${subject.teacher}` : ''}</span>
-                      <span>{subject.room || ''}</span>
+                      <span>Facility</span>
+                      <span>{subject.room}</span>
                     </div>
                   )}
 
@@ -257,17 +281,105 @@ export const DashboardHub: React.FC = () => {
                     {subject.completedModules}/{subject.totalModules} modules
                   </span>
 
-                  <button
-                    onClick={() => handleResumeSubject(subject.id)}
-                    className="flex items-center gap-1 px-3 py-1 rounded text-xs theme-accent-btn font-medium transition-opacity cursor-pointer shadow-xs"
-                  >
-                    <Play className="w-2.5 h-2.5 fill-current" />
-                    <span>Resume</span>
-                  </button>
+                  <div className="flex items-center gap-1.5">
+                    <a
+                      href={OFFICIAL_PAPERLORDS_IGCSE_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-1 px-2 py-1 rounded text-xs border theme-border theme-subtle theme-text-secondary hover:theme-text-primary hover:border-zinc-500 transition-colors cursor-pointer"
+                      title={`Open PaperLords IGCSE repository for ${subject.name} (${subject.code})`}
+                    >
+                      <ExternalLink className="w-2.5 h-2.5" />
+                      <span>PaperLords</span>
+                    </a>
+
+                    <button
+                      onClick={() => handleResumeSubject(subject.id)}
+                      className="flex items-center gap-1 px-3 py-1 rounded text-xs theme-accent-btn font-medium transition-opacity cursor-pointer shadow-xs"
+                    >
+                      <Play className="w-2.5 h-2.5 fill-current" />
+                      <span>Resume</span>
+                    </button>
+                  </div>
                 </div>
               </div>
             );
           })}
+        </div>
+      </section>
+
+      {/* Official PaperLords Archive Quick Access Strip */}
+      <section className="rounded-xl border border-emerald-500/30 bg-emerald-500/5 p-4 sm:p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 font-mono shadow-xs">
+        <div className="flex items-start gap-3.5">
+          <div className="w-10 h-10 rounded-lg bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center shrink-0 text-emerald-400 shadow-xs">
+            <FileText className="w-5 h-5" />
+          </div>
+          <div className="space-y-1">
+            <div className="flex items-center gap-2 text-xs text-emerald-400 font-bold uppercase tracking-wider">
+              <span>Official Past Papers Repository</span>
+              <span aria-hidden="true">·</span>
+              <span>PaperLords.org/igcse</span>
+            </div>
+            <h3 className="text-sm font-bold theme-text-primary">
+              Direct Access to All Edexcel IGCSE Past Papers
+            </h3>
+            <p className="text-xs font-sans theme-text-secondary max-w-2xl leading-relaxed">
+              Official past papers and mark schemes for Mathematics (4MA1), Physics (4PH1), Chemistry (4CH1), Biology (4BI1), French (4FR1), ICT (4IT1), Commerce (4CM1), English Literature (4ET1) and more. Attempt questions and upload photos of your handwritten working for marking assistance.
+            </p>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-2 shrink-0 self-start md:self-auto">
+          <button
+            onClick={() => setActiveView('pastpapers')}
+            className="px-3.5 py-2 rounded-lg border theme-border theme-card text-xs font-medium hover:theme-accent-btn transition-colors cursor-pointer flex items-center gap-1.5"
+          >
+            <Camera className="w-3.5 h-3.5" />
+            <span>Marking Workspace</span>
+          </button>
+          <a
+            href={OFFICIAL_PAPERLORDS_IGCSE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-3.5 py-2 rounded-lg theme-accent-btn text-xs font-bold flex items-center gap-1.5 cursor-pointer shadow-xs"
+          >
+            <span>Browse PaperLords</span>
+            <ExternalLink className="w-3.5 h-3.5" />
+          </a>
+        </div>
+      </section>
+
+      {/* Peer Study Rooms & Google Meet Feature Banner */}
+      <section className="rounded-xl border theme-border theme-card p-5 shadow-xs">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="flex items-start gap-3.5">
+            <div className="w-10 h-10 rounded-lg theme-accent-btn flex items-center justify-center shrink-0 shadow-xs">
+              <Video className="w-5 h-5" />
+            </div>
+            <div className="space-y-1">
+              <div className="flex items-center gap-2 text-xs font-mono theme-text-muted">
+                <span className="font-semibold uppercase tracking-wider">New Section</span>
+                <span>·</span>
+                <span className="text-emerald-400 font-bold">Synchronized 25m Focus</span>
+              </div>
+              <h3 className="text-sm sm:text-base font-bold theme-text-primary">
+                Peer Study Rooms & Google Meet Hub
+              </h3>
+              <p className="text-xs font-sans theme-text-secondary max-w-xl leading-relaxed">
+                Study subjects with your friends, ask questions in the discussion chat, share photos of your handwritten working, or jump into live video sessions with scheduled Google Meet links.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2 shrink-0 self-start md:self-center">
+            <button
+              onClick={() => setActiveView('study_rooms')}
+              className="flex items-center gap-2 px-4 py-2 rounded-lg theme-accent-btn text-xs font-mono font-bold cursor-pointer shadow-xs"
+            >
+              <Users className="w-3.5 h-3.5" />
+              <span>Explore Study Rooms</span>
+            </button>
+          </div>
         </div>
       </section>
 

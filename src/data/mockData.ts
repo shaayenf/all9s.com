@@ -242,6 +242,21 @@ export const SUBJECTS: SubjectInfo[] = [
     totalModules: 6,
     completedModules: 3,
   },
+  {
+    id: 'commerce',
+    code: '4CM1',
+    name: 'Commerce',
+    shortName: 'Comm',
+    teacher: 'Priyanga',
+    room: '11A / BusRm',
+    department: 'Commerce',
+    iconName: 'ShoppingBag',
+    color: 'amber',
+    progressPercent: 70,
+    lastTopic: 'Commercial Operations & International Trade Documents',
+    totalModules: 5,
+    completedModules: 3,
+  },
 
   // Humanities
   {

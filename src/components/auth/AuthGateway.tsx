@@ -265,7 +265,7 @@ export const AuthGateway: React.FC<{ children: React.ReactNode }> = ({ children 
                         type="text"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        placeholder="Search subject by name, code (e.g. 4PH1, 4CP0) or teacher (Dinum, Nipuni)..."
+                        placeholder="Search subject by name, code (e.g. 4PH1, 4CP0) or room..."
                         className="w-full pl-8 pr-3 py-1.5 text-xs font-mono rounded border theme-border theme-input theme-text-primary focus:outline-none"
                       />
                     </div>
@@ -315,7 +315,7 @@ export const AuthGateway: React.FC<{ children: React.ReactNode }> = ({ children 
                           </div>
 
                           <div className="flex items-center justify-between text-[10px] opacity-80">
-                            <span>{sub.teacher ? `Teacher: ${sub.teacher}` : sub.department}</span>
+                            <span>{sub.department}</span>
                             {sub.room && <span>{sub.room}</span>}
                           </div>
                         </button>
@@ -370,9 +370,11 @@ export const AuthGateway: React.FC<{ children: React.ReactNode }> = ({ children 
                       <span className="font-semibold theme-text-primary">
                         {activeSubjectInfo.name} ({activeSubjectInfo.code})
                       </span>
-                      <span className="theme-text-muted text-[10px]">
-                        Teacher: {activeSubjectInfo.teacher} · {activeSubjectInfo.room}
-                      </span>
+                      {activeSubjectInfo.room && (
+                        <span className="theme-text-muted text-[10px]">
+                          Room: {activeSubjectInfo.room}
+                        </span>
+                      )}
                     </div>
                   </div>
                 </div>

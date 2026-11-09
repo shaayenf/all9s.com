@@ -18,6 +18,7 @@ import { AuthGateway } from './components/auth/AuthGateway';
 import { OpencodeDrawer } from './components/ai/OpencodeDrawer';
 import { StudentFeedSection } from './components/feed/StudentFeedSection';
 import { PastPapersSection } from './components/pastpapers/PastPapersSection';
+import { StudyRoomsHub } from './components/studyrooms/StudyRoomsHub';
 
 const AppContent: React.FC = () => {
   const { activeView, setActiveView } = useApp();
@@ -36,6 +37,7 @@ const AppContent: React.FC = () => {
         {activeView === 'dashboard' && <DashboardHub />}
         {activeView === 'vault' && <RevisionVault />}
         {activeView === 'feed' && <StudentFeedSection />}
+        {activeView === 'study_rooms' && <StudyRoomsHub />}
         {activeView === 'pastpapers' && <PastPapersSection />}
         {activeView === 'lingua' && <LinguaTerminal />}
         {activeView === 'exam' && <ExamSimulatorArena />}
@@ -74,6 +76,12 @@ const AppContent: React.FC = () => {
               className="hover:opacity-100 opacity-75 transition-opacity cursor-pointer"
             >
               Student Feed
+            </button>
+            <button
+              onClick={() => setActiveView('study_rooms')}
+              className="hover:opacity-100 opacity-75 transition-opacity cursor-pointer"
+            >
+              Study Rooms
             </button>
             <button
               onClick={() => setActiveView('pastpapers')}

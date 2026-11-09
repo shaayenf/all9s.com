@@ -15,7 +15,12 @@ import {
   AlertCircle,
   GraduationCap,
   BookOpen,
+  Users,
+  Sparkles,
 } from 'lucide-react';
+import { PIXEL_BADGES } from '../../data/badgesData';
+import { PixelBadge } from './PixelBadge';
+import { StudentDirectoryModal } from './StudentDirectoryModal';
 
 export const UserProfile: React.FC = () => {
   const {
@@ -36,16 +41,87 @@ export const UserProfile: React.FC = () => {
     resetToLevelOne,
     setActiveView,
     toggleOpencode,
+    pomodoro,
+    completedCheckpoints,
   } = useApp();
 
   const [inputNickname, setInputNickname] = useState(nickname);
   const [saveStatus, setSaveStatus] = useState<'idle' | 'saved' | 'error'>('idle');
   const [subjectSaved, setSubjectSaved] = useState(false);
   const [showResetConfirm, setShowResetConfirm] = useState(false);
+  const [isStudentDirectoryOpen, setIsStudentDirectoryOpen] = useState(false);
 
   // Find user's live rank on leaderboard
   const userRankEntry = leaderboardUsers.find((u) => u.isCurrentUser || u.name === nickname);
   const userRank = userRankEntry ? userRankEntry.rank : 1;
+
+  // Solved papers info from localStorage
+  const solvedPapersInfo = (() => {
+    try {
+      const saved = localStorage.getItem('all9s_paperlords_solved');
+      if (saved) return JSON.parse(saved);
+    } catch {
+      // ignore
+    }
+    return {};
+  })();
+
+  const solvedCount = Object.keys(solvedPapersInfo).length;
+  const hasPerfectScore = Object.values(solvedPapersInfo).some((p: any) => p.score && p.score >= 100);
+
+  const totalFocusMinutes = Math.floor(
+    Object.values(pomodoro?.subjectStats || {}).reduce((acc: number, val: any) => acc + (typeof val === 'number' ? val : 0), 0) / 60
+  );
+
+  const getBadgeCurrentValue = (badgeId: string): number => {
+    switch (badgeId) {
+      case 'streak_10':
+        return streak;
+      case 'perfect_score':
+        return hasPerfectScore ? 1 : 0;
+      case 'subject_master':
+        return completedCheckpoints?.size || 0;
+      case 'pomodoro_centurion':
+        return totalFocusMinutes;
+      case 'speed_solver':
+        return solvedCount;
+      case 'vault_pioneer':
+        return completedCheckpoints?.size || 0;
+      case 'community_scholar':
+        return 1;
+      case 'room_host':
+        return 1;
+      case 'diamond_tier':
+        return level;
+      default:
+        return 0;
+    }
+  };
+
+  const isBadgeUnlocked = (badgeId: string): boolean => {
+    switch (badgeId) {
+      case 'streak_10':
+        return streak >= 10;
+      case 'perfect_score':
+        return hasPerfectScore;
+      case 'subject_master':
+        return (completedCheckpoints?.size || 0) >= 6;
+      case 'pomodoro_centurion':
+        return totalFocusMinutes >= 100;
+      case 'speed_solver':
+        return solvedCount >= 1;
+      case 'vault_pioneer':
+        return (completedCheckpoints?.size || 0) >= 4;
+      case 'community_scholar':
+        return true;
+      case 'room_host':
+        return true;
+      case 'diamond_tier':
+        return level >= 2;
+      default:
+        return false;
+    }
+  };
 
   const XP_FOR_NEXT = 1000;
   const currentLevelProgress = xp % XP_FOR_NEXT;
@@ -102,11 +178,18 @@ export const UserProfile: React.FC = () => {
 
           <div className="flex flex-wrap items-center gap-2">
             <button
+              onClick={() => setIsStudentDirectoryOpen(true)}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded theme-accent-btn text-xs font-mono font-semibold transition-opacity cursor-pointer shadow-xs"
+            >
+              <Users className="w-3.5 h-3.5" />
+              <span>Search Friends</span>
+            </button>
+            <button
               onClick={() => setActiveView('rewards')}
               className="flex items-center gap-1.5 px-3 py-1.5 rounded border theme-border theme-subtle theme-text-primary hover:opacity-85 text-xs font-mono transition-opacity cursor-pointer shadow-xs"
             >
               <Trophy className="w-3.5 h-3.5" />
-              <span>View On Leaderboard</span>
+              <span>Leaderboard</span>
             </button>
             <button
               onClick={() => setActiveView('settings')}
@@ -349,7 +432,7 @@ export const UserProfile: React.FC = () => {
                     </div>
 
                     <div className="flex items-center justify-between text-[10px] opacity-80 pt-1 border-t border-white/10">
-                      <span>{sub.teacher ? `Teacher: ${sub.teacher}` : sub.department}</span>
+                      <span>{sub.department}</span>
                       {sub.room && <span>{sub.room}</span>}
                     </div>
                   </button>
@@ -488,6 +571,69 @@ export const UserProfile: React.FC = () => {
           </section>
         </div>
       </div>
+
+      {/* 3. Pixel-Art Badges & Achievements System */}
+      <section className="rounded-xl border theme-border theme-card p-6 space-y-6 shadow-xs font-mono">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b theme-border gap-3">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-lg border theme-border theme-subtle flex items-center justify-center font-bold text-base theme-accent-text">
+              <Sparkles className="w-5 h-5" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <h2 className="text-lg font-bold theme-text-primary tracking-tight">
+                  Badges & Pixel-Art Achievements
+                </h2>
+                <span className="text-[10px] px-2 py-0.5 rounded border border-amber-500/30 bg-amber-500/10 text-amber-400 font-bold">
+                  8-Bit Retro Spec
+                </span>
+              </div>
+              <p className="text-xs theme-text-muted mt-0.5">
+                Unlock collectible pixel milestones by maintaining revision streaks, scoring perfect papers, and mastering syllabus modules
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2 self-start sm:self-auto">
+            <div className="px-3 py-1.5 rounded-lg border theme-border theme-subtle text-xs">
+              <span className="theme-text-muted">Unlocked: </span>
+              <span className="font-bold theme-text-primary">
+                {PIXEL_BADGES.filter((b) => isBadgeUnlocked(b.id)).length} / {PIXEL_BADGES.length}
+              </span>
+            </div>
+            <button
+              onClick={() => setIsStudentDirectoryOpen(true)}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded border theme-border theme-subtle text-xs font-semibold theme-text-secondary hover:theme-text-primary cursor-pointer"
+            >
+              <Users className="w-3.5 h-3.5" />
+              <span>Compare with Friends</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Badges Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
+          {PIXEL_BADGES.map((badge) => {
+            const unlocked = isBadgeUnlocked(badge.id);
+            const val = getBadgeCurrentValue(badge.id);
+
+            return (
+              <PixelBadge
+                key={badge.id}
+                badge={badge}
+                isUnlocked={unlocked}
+                currentValue={val}
+              />
+            );
+          })}
+        </div>
+      </section>
+
+      {/* Student Directory & Friend Search Modal */}
+      <StudentDirectoryModal
+        isOpen={isStudentDirectoryOpen}
+        onClose={() => setIsStudentDirectoryOpen(false)}
+      />
     </div>
   );
 };

@@ -29,6 +29,7 @@ export const Header: React.FC = () => {
     { view: 'dashboard', label: 'Dashboard' },
     { view: 'vault', label: 'Revision Vault' },
     { view: 'feed', label: 'Student Feed' },
+    { view: 'study_rooms', label: 'Study Rooms' },
     { view: 'pastpapers', label: 'Past Papers' },
     { view: 'lingua', label: 'LinguaTerminal' },
     { view: 'exam', label: 'Exam Arena' },

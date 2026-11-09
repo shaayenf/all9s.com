@@ -28,7 +28,7 @@
     },
     "PublicProfile": {
       "title": "PublicProfile",
-      "description": "Public O/L student profile for the level-based leaderboard and AI tutor interactions",
+      "description": "Public O/L student profile for the level-based leaderboard, friend search, and AI tutor interactions",
       "type": "object",
       "properties": {
         "userId": {
@@ -74,6 +74,25 @@
           "description": "Primary revision subject selected from class timetable",
           "maxLength": 32
         },
+        "bio": {
+          "type": "string",
+          "description": "Candidate personal study motto or bio",
+          "maxLength": 160
+        },
+        "unlockedBadges": {
+          "type": "array",
+          "description": "List of unlocked pixel-art achievement badge identifiers",
+          "items": {
+            "type": "string"
+          }
+        },
+        "friendIds": {
+          "type": "array",
+          "description": "List of bookmarked study buddy user IDs",
+          "items": {
+            "type": "string"
+          }
+        },
         "updatedAt": {
           "type": "string",
           "description": "Timestamp of profile change"
@@ -117,6 +136,112 @@
         }
       },
       "required": ["userId", "themeMode", "palette", "accentColor"]
+    },
+    "StudyRoom": {
+      "title": "StudyRoom",
+      "description": "Dedicated subject-specific peer study room for group revision and Google Meet sync",
+      "type": "object",
+      "properties": {
+        "roomId": {
+          "type": "string",
+          "description": "Unique study room identifier",
+          "maxLength": 128
+        },
+        "subjectId": {
+          "type": "string",
+          "description": "Timetable subject ID for this room",
+          "maxLength": 32
+        },
+        "name": {
+          "type": "string",
+          "description": "Room title",
+          "maxLength": 64
+        },
+        "topic": {
+          "type": "string",
+          "description": "Active syllabus focus topic",
+          "maxLength": 100
+        },
+        "createdBy": {
+          "type": "string",
+          "description": "Host student user ID",
+          "maxLength": 128
+        },
+        "creatorNickname": {
+          "type": "string",
+          "description": "Host student candidate nickname",
+          "maxLength": 24
+        },
+        "meetLink": {
+          "type": "string",
+          "description": "Scheduled Google Meet meeting link URL",
+          "maxLength": 200
+        },
+        "pomodoroRemainingSeconds": {
+          "type": "number",
+          "description": "Synchronized room study timer in seconds"
+        },
+        "isPomodoroActive": {
+          "type": "boolean",
+          "description": "Whether group study timer is running"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "ISO timestamp of room creation"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "ISO timestamp of room update"
+        }
+      },
+      "required": ["roomId", "subjectId", "name", "createdBy", "creatorNickname"]
+    },
+    "StudyMessage": {
+      "title": "StudyMessage",
+      "description": "Discussion message or doubt question posted in a subject study room",
+      "type": "object",
+      "properties": {
+        "messageId": {
+          "type": "string",
+          "description": "Unique message ID",
+          "maxLength": 128
+        },
+        "roomId": {
+          "type": "string",
+          "description": "Target study room ID",
+          "maxLength": 128
+        },
+        "userId": {
+          "type": "string",
+          "description": "Author student UID",
+          "maxLength": 128
+        },
+        "nickname": {
+          "type": "string",
+          "description": "Author student nickname",
+          "maxLength": 24
+        },
+        "avatarSeed": {
+          "type": "string",
+          "description": "Author avatar seed initials",
+          "maxLength": 4
+        },
+        "text": {
+          "type": "string",
+          "description": "Chat question or discussion message text",
+          "maxLength": 1000
+        },
+        "attachmentUrl": {
+          "type": "string",
+          "description": "Optional image URL / working photo upload",
+          "maxLength": 500000
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "ISO timestamp of message"
+        }
+      },
+      "required": ["messageId", "roomId", "userId", "nickname", "text"]
     }
   },
   "firestore": {
@@ -126,11 +251,19 @@
     },
     "/publicProfiles/{userId}": {
       "schema": "PublicProfile",
-      "description": "Public O/L student profiles queried for level-based leaderboards"
+      "description": "Public O/L student profiles queried for level-based leaderboards, friend search, and dossiers"
     },
     "/userSettings/{userId}": {
       "schema": "UserSettings",
       "description": "Private student appearance and color customizations"
+    },
+    "/studyRooms/{roomId}": {
+      "schema": "StudyRoom",
+      "description": "Subject study rooms where candidates focus with friends and share Google Meet links"
+    },
+    "/studyRooms/{roomId}/messages/{messageId}": {
+      "schema": "StudyMessage",
+      "description": "Live chat questions and working image uploads inside study rooms"
     }
   }
 }

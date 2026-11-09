@@ -1,7 +1,7 @@
 import React from 'react';
 import { useApp } from '../../context/AppContext';
 import { formatTimerSeconds } from '../../utils/pomodoro';
-import { BookOpen, Gamepad2, Timer, Bot, Trophy, ArrowRight, SlidersHorizontal, User, Share2, FileText } from 'lucide-react';
+import { BookOpen, Gamepad2, Timer, Bot, Trophy, ArrowRight, SlidersHorizontal, User, Share2, FileText, Users, Video } from 'lucide-react';
 
 export const QuickActionBar: React.FC = () => {
   const { setActiveView, toggleOpencode, pomodoro } = useApp();
@@ -31,7 +31,15 @@ export const QuickActionBar: React.FC = () => {
               className="flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-mono border theme-border theme-subtle theme-text-primary hover:opacity-100 opacity-85 transition-opacity cursor-pointer"
             >
               <Share2 className="w-3.5 h-3.5 opacity-70" />
-              <span>Student Feed</span>
+              <span>Feed</span>
+            </button>
+
+            <button
+              onClick={() => setActiveView('study_rooms')}
+              className="flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-mono border theme-border theme-subtle theme-text-primary hover:opacity-100 opacity-85 transition-opacity cursor-pointer"
+            >
+              <Users className="w-3.5 h-3.5 opacity-70" />
+              <span>Study Rooms</span>
             </button>
 
             <button

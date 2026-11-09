@@ -1,4 +1,4 @@
-export type AppView = 'dashboard' | 'vault' | 'feed' | 'pastpapers' | 'lingua' | 'exam' | 'rewards' | 'settings' | 'profile';
+export type AppView = 'dashboard' | 'vault' | 'feed' | 'pastpapers' | 'study_rooms' | 'lingua' | 'exam' | 'rewards' | 'settings' | 'profile';
 
 export type SubjectId =
   | 'physics'
@@ -14,6 +14,7 @@ export type SubjectId =
   | 'economics'
   | 'business_studies'
   | 'accounting'
+  | 'commerce'
   | 'computer_science'
   | 'history'
   | 'geography'
@@ -221,3 +222,35 @@ export interface PomodoroState {
   sessionHistory: PomodoroSessionRecord[];
 }
 
+export interface StudyRoomInfo {
+  roomId: string;
+  subjectId: SubjectId;
+  name: string;
+  topic: string;
+  createdBy: string;
+  creatorNickname: string;
+  activeParticipants: {
+    userId: string;
+    nickname: string;
+    avatarSeed: string;
+    level: number;
+    currentFocusTopic?: string;
+  }[];
+  meetLink?: string | null;
+  pomodoroRemainingSeconds?: number;
+  isPomodoroActive?: boolean;
+  createdAt: string;
+  updatedAt?: string;
+}
+
+export interface StudyChatMessage {
+  id: string;
+  roomId: string;
+  userId: string;
+  nickname: string;
+  avatarSeed: string;
+  text: string;
+  attachmentUrl?: string; // photo / handwritten working snapshot
+  createdAt: string;
+  likesCount?: number;
+}

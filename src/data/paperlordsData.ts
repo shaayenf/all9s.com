@@ -1,4 +1,7 @@
 import { PaperLordsPaper, SubjectId } from '../types';
+import { OFFICIAL_PAPERLORDS_IGCSE_URL } from '../utils/paperlords';
+
+export { OFFICIAL_PAPERLORDS_IGCSE_URL };
 
 export const PAPERLORDS_PAPERS: PaperLordsPaper[] = [
   // ===================== PHYSICS (4PH1) =====================
@@ -15,7 +18,7 @@ export const PAPERLORDS_PAPERS: PaperLordsPaper[] = [
     durationMinutes: 120,
     totalMarks: 110,
     paperlordsSlug: 'edexcel-igcse-physics-4ph1-2024-june-1p',
-    paperlordsUrl: 'https://paperlords.org/edexcel-igcse/physics-4ph1/2024/june/paper-1p',
+    paperlordsUrl: OFFICIAL_PAPERLORDS_IGCSE_URL,
     gradeBoundaries: {
       grade9: 86,
       grade8: 76,
@@ -84,7 +87,7 @@ export const PAPERLORDS_PAPERS: PaperLordsPaper[] = [
     durationMinutes: 75,
     totalMarks: 70,
     paperlordsSlug: 'edexcel-igcse-physics-4ph1-2024-june-2p',
-    paperlordsUrl: 'https://paperlords.org/edexcel-igcse/physics-4ph1/2024/june/paper-2p',
+    paperlordsUrl: OFFICIAL_PAPERLORDS_IGCSE_URL,
     gradeBoundaries: {
       grade9: 56,
       grade8: 49,
@@ -126,7 +129,7 @@ export const PAPERLORDS_PAPERS: PaperLordsPaper[] = [
     durationMinutes: 120,
     totalMarks: 110,
     paperlordsSlug: 'edexcel-igcse-physics-4ph1-2023-june-1pr',
-    paperlordsUrl: 'https://paperlords.org/edexcel-igcse/physics-4ph1/2023/june/paper-1pr',
+    paperlordsUrl: OFFICIAL_PAPERLORDS_IGCSE_URL,
     gradeBoundaries: {
       grade9: 84,
       grade8: 74,
@@ -161,7 +164,7 @@ export const PAPERLORDS_PAPERS: PaperLordsPaper[] = [
     durationMinutes: 120,
     totalMarks: 110,
     paperlordsSlug: 'edexcel-igcse-chemistry-4ch1-2024-june-1c',
-    paperlordsUrl: 'https://paperlords.org/edexcel-igcse/chemistry-4ch1/2024/june/paper-1c',
+    paperlordsUrl: OFFICIAL_PAPERLORDS_IGCSE_URL,
     gradeBoundaries: {
       grade9: 82,
       grade8: 72,
@@ -213,7 +216,7 @@ export const PAPERLORDS_PAPERS: PaperLordsPaper[] = [
     durationMinutes: 75,
     totalMarks: 70,
     paperlordsSlug: 'edexcel-igcse-chemistry-4ch1-2024-june-2c',
-    paperlordsUrl: 'https://paperlords.org/edexcel-igcse/chemistry-4ch1/2024/june/paper-2c',
+    paperlordsUrl: OFFICIAL_PAPERLORDS_IGCSE_URL,
     gradeBoundaries: {
       grade9: 55,
       grade8: 48,
@@ -254,7 +257,7 @@ export const PAPERLORDS_PAPERS: PaperLordsPaper[] = [
     durationMinutes: 120,
     totalMarks: 110,
     paperlordsSlug: 'edexcel-igcse-biology-4bi1-2024-june-1b',
-    paperlordsUrl: 'https://paperlords.org/edexcel-igcse/biology-4bi1/2024/june/paper-1b',
+    paperlordsUrl: OFFICIAL_PAPERLORDS_IGCSE_URL,
     gradeBoundaries: {
       grade9: 83,
       grade8: 73,
@@ -310,7 +313,7 @@ export const PAPERLORDS_PAPERS: PaperLordsPaper[] = [
     durationMinutes: 120,
     totalMarks: 100,
     paperlordsSlug: 'edexcel-igcse-maths-4ma1-2024-june-1h',
-    paperlordsUrl: 'https://paperlords.org/edexcel-igcse/maths-4ma1/2024/june/paper-1h',
+    paperlordsUrl: OFFICIAL_PAPERLORDS_IGCSE_URL,
     gradeBoundaries: {
       grade9: 80,
       grade8: 68,
@@ -365,7 +368,7 @@ export const PAPERLORDS_PAPERS: PaperLordsPaper[] = [
     durationMinutes: 120,
     totalMarks: 100,
     paperlordsSlug: 'edexcel-igcse-maths-4ma1-2024-june-2h',
-    paperlordsUrl: 'https://paperlords.org/edexcel-igcse/maths-4ma1/2024/june/paper-2h',
+    paperlordsUrl: OFFICIAL_PAPERLORDS_IGCSE_URL,
     gradeBoundaries: {
       grade9: 79,
       grade8: 67,
@@ -406,7 +409,7 @@ export const PAPERLORDS_PAPERS: PaperLordsPaper[] = [
     durationMinutes: 120,
     totalMarks: 100,
     paperlordsSlug: 'edexcel-igcse-maths-4ma1-2024-june-1f',
-    paperlordsUrl: 'https://paperlords.org/edexcel-igcse/maths-4ma1/2024/june/paper-1f',
+    paperlordsUrl: OFFICIAL_PAPERLORDS_IGCSE_URL,
     gradeBoundaries: {
       grade9: 0,
       grade8: 0,
@@ -441,7 +444,7 @@ export const PAPERLORDS_PAPERS: PaperLordsPaper[] = [
     durationMinutes: 105,
     totalMarks: 80,
     paperlordsSlug: 'edexcel-igcse-french-4fr1-2024-june-paper-2',
-    paperlordsUrl: 'https://paperlords.org/edexcel-igcse/french-4fr1/2024/june/paper-2',
+    paperlordsUrl: OFFICIAL_PAPERLORDS_IGCSE_URL,
     gradeBoundaries: {
       grade9: 68,
       grade8: 61,
@@ -484,7 +487,7 @@ export const PAPERLORDS_PAPERS: PaperLordsPaper[] = [
     durationMinutes: 90,
     totalMarks: 100,
     paperlordsSlug: 'edexcel-igcse-ict-4it1-2024-june-paper-1',
-    paperlordsUrl: 'https://paperlords.org/edexcel-igcse/ict-4it1/2024/june/paper-1',
+    paperlordsUrl: OFFICIAL_PAPERLORDS_IGCSE_URL,
     gradeBoundaries: {
       grade9: 78,
       grade8: 69,
@@ -524,4 +527,511 @@ export const PAPERLORDS_PAPERS: PaperLordsPaper[] = [
       },
     ],
   },
+
+  // ===================== ECONOMICS (4EC1) =====================
+  {
+    id: 'pl-econ-2024-june-01',
+    subjectId: 'economics',
+    subjectCode: '4EC1',
+    subjectName: 'Economics',
+    year: 2024,
+    session: 'June',
+    paperCode: '4EC1/01',
+    paperName: 'Paper 1: Microeconomics and Business Economics',
+    tier: 'Standard',
+    durationMinutes: 90,
+    totalMarks: 80,
+    paperlordsSlug: 'edexcel-igcse-economics-4ec1-2024-june-paper-1',
+    paperlordsUrl: OFFICIAL_PAPERLORDS_IGCSE_URL,
+    gradeBoundaries: {
+      grade9: 66,
+      grade8: 59,
+      grade7: 52,
+      grade6: 43,
+      grade4: 28,
+    },
+    keyTopics: ['Price Elasticity of Demand (PED)', 'Market Failure & Negative Externalities', 'Economies of Scale', 'Government Intervention & Subsidies'],
+    examinerWarnings: [
+      'In subsidy diagrams, clearly show the shift of the supply curve downwards/to the right and label the incidence on consumers vs producers.',
+      'Always distinguish between a change in demand (shift of curve) and a change in quantity demanded (movement along curve due to price).',
+    ],
+    sampleQuestions: [
+      {
+        number: 'Q2(c)',
+        topic: 'Price Elasticity of Demand',
+        marks: 4,
+        questionText: 'Explain one reason why the price elasticity of demand (PED) for insulin is highly price inelastic.',
+        markSchemePoints: [
+          'Identification of reason: Necessity / life-saving medicine / no close substitutes (1)',
+          'Explanation: Patients require fixed daily doses to regulate blood glucose (1)',
+          'Development: Consumers cannot easily switch to alternatives even if price increases significantly (1)',
+          'Result: Percentage change in quantity demanded is significantly less than percentage change in price (PED < 1) (1)',
+        ],
+        examinerTip: 'Do not just say "people need it". Define PED as %ΔQd / %ΔP and explain the lack of substitutes.',
+      },
+      {
+        number: 'Q4',
+        topic: 'Market Failure & Externalities',
+        marks: 6,
+        questionText: 'Assess the effectiveness of imposing an indirect tax on sugary soft drinks to reduce market failure caused by negative externalities of consumption.',
+        markSchemePoints: [
+          'Analysis: Tax increases costs of production, shifting supply curve upwards (1)',
+          'Leads to higher market equilibrium price and reduced equilibrium quantity consumed (1)',
+          'Reduces healthcare costs and negative externalities on society (1)',
+          'Evaluation: Tax incidence depends on PED; if demand is inelastic, consumers continue buying and tax is regressive (1)',
+          'Could lead to illicit/black market trade or substitution to other sugary foods (1)',
+          'Conclusion/Judgment: Most effective when combined with health education and subsidies on healthier alternatives (1)',
+        ],
+      },
+    ],
+  },
+
+  // ===================== COMPUTER SCIENCE (4CP0) =====================
+  {
+    id: 'pl-cs-2024-june-01',
+    subjectId: 'computer_science',
+    subjectCode: '4CP0',
+    subjectName: 'Computer Science',
+    year: 2024,
+    session: 'June',
+    paperCode: '4CP0/01',
+    paperName: 'Paper 1: Principles of Computer Science',
+    tier: 'Standard',
+    durationMinutes: 120,
+    totalMarks: 80,
+    paperlordsSlug: 'edexcel-igcse-computer-science-4cp0-2024-june-paper-1',
+    paperlordsUrl: OFFICIAL_PAPERLORDS_IGCSE_URL,
+    gradeBoundaries: {
+      grade9: 67,
+      grade8: 59,
+      grade7: 51,
+      grade6: 42,
+      grade4: 26,
+    },
+    keyTopics: ['Von Neumann Architecture & FDE Cycle', 'Binary Arithmetic & Two’s Complement', 'Sorting & Searching Algorithms (Binary vs Linear)', 'Python Subprograms & Parameter Passing'],
+    examinerWarnings: [
+      'Binary search requires the dataset to be SORTED beforehand; linear search does not.',
+      'In Two’s complement, flip all bits and add 1; remember the most significant bit carries negative weight.',
+    ],
+    sampleQuestions: [
+      {
+        number: 'Q3',
+        topic: 'Algorithms & Complexity',
+        marks: 4,
+        questionText: 'A list contains 64 sorted names. Calculate the maximum number of comparisons required to locate a name using (i) Linear search, and (ii) Binary search.',
+        markSchemePoints: [
+          'Linear search worst-case: 64 comparisons (inspects every element sequentially) (2)',
+          'Binary search worst-case: log₂(64) = 6 comparisons (halves search space each iteration) (2)',
+        ],
+        examinerTip: 'Always show 2⁶ = 64 to justify the 6 comparisons for binary search.',
+      },
+      {
+        number: 'Q7(a)',
+        topic: 'Computer Systems & Architecture',
+        marks: 4,
+        questionText: 'Describe the role of the Program Counter (PC) and the Memory Address Register (MAR) during the Fetch stage of the Fetch-Decode-Execute cycle.',
+        markSchemePoints: [
+          'Program Counter holds the memory address of the next instruction to be fetched (1)',
+          'Address in PC is copied into the Memory Address Register (MAR) via address bus (1)',
+          'PC is incremented by 1 to point to subsequent instruction (1)',
+          'MAR sends address across address bus to RAM to retrieve instruction into MDR (1)',
+        ],
+      },
+    ],
+  },
+
+  // ===================== FURTHER PURE MATHEMATICS (4PM1) =====================
+  {
+    id: 'pl-fpm-2024-june-01',
+    subjectId: 'further_pure_maths',
+    subjectCode: '4PM1',
+    subjectName: 'Further Pure Mathematics',
+    year: 2024,
+    session: 'June',
+    paperCode: '4PM1/01',
+    paperName: 'Paper 1: Advanced Pure Mathematics & Vector Geometry',
+    tier: 'Higher',
+    durationMinutes: 120,
+    totalMarks: 100,
+    paperlordsSlug: 'edexcel-igcse-further-pure-maths-4pm1-2024-june-paper-1',
+    paperlordsUrl: OFFICIAL_PAPERLORDS_IGCSE_URL,
+    gradeBoundaries: {
+      grade9: 78,
+      grade8: 65,
+      grade7: 52,
+      grade6: 40,
+      grade4: 21,
+    },
+    keyTopics: ['Maclaurin & Binomial Series Expansion', 'Trigonometric Identities (cos 2θ, tan(A±B))', 'Integration by Substitution & Parts', 'Vector Equations of Lines & Dot Product'],
+    examinerWarnings: [
+      'Carefully check the validity range for binomial expansions (e.g., |x| < 1/3 for (1 + 3x)⁻¹).',
+      'When calculating vector dot product, a · b = |a||b| cos θ; non-zero vectors with dot product = 0 are perpendicular.',
+    ],
+    sampleQuestions: [
+      {
+        number: 'Q5',
+        topic: 'Calculus: Maclaurin Series',
+        marks: 5,
+        questionText: 'Find the first four non-zero terms of the Maclaurin series expansion of f(x) = e^(2x) sin(3x).',
+        markSchemePoints: [
+          'f(0) = 0 (1)',
+          'f\'(x) = 2e^(2x) sin(3x) + 3e^(2x) cos(3x) => f\'(0) = 3 (1)',
+          'f\'\'(x) = e^(2x) [ (4 - 9)sin(3x) + 12cos(3x) ] => f\'\'(0) = 12 (1)',
+          'f\'\'\'(x) => f\'\'\'(0) = 35 (1)',
+          'f(x) = 3x + 6x² + (35/6)x³ + ... (1)',
+        ],
+      },
+    ],
+  },
+
+  // ===================== BUSINESS STUDIES (4BS1) =====================
+  {
+    id: 'pl-bs-2024-june-01',
+    subjectId: 'business_studies',
+    subjectCode: '4BS1',
+    subjectName: 'Business Studies',
+    year: 2024,
+    session: 'June',
+    paperCode: '4BS1/01',
+    paperName: 'Paper 1: Investigating Small Businesses',
+    tier: 'Standard',
+    durationMinutes: 90,
+    totalMarks: 80,
+    paperlordsSlug: 'edexcel-igcse-business-4bs1-2024-june-paper-1',
+    paperlordsUrl: OFFICIAL_PAPERLORDS_IGCSE_URL,
+    gradeBoundaries: {
+      grade9: 64,
+      grade8: 57,
+      grade7: 50,
+      grade6: 41,
+      grade4: 27,
+    },
+    keyTopics: ['Cash Flow Forecasting & Break-Even Analysis', 'Sources of Finance (Overdraft vs Loan vs Venture Capital)', 'Marketing Mix (4Ps)', 'Organizational Structures & Span of Control'],
+    examinerWarnings: [
+      'Contextualize answers to the business case study provided; generic answers are capped at level 1 marks.',
+      'Remember: Revenue - Total Costs = Profit; Cash flow measures timing of liquidity, not profitability.',
+    ],
+    sampleQuestions: [
+      {
+        number: 'Q2(d)',
+        topic: 'Financial Calculations',
+        marks: 4,
+        questionText: 'A boutique bakery sells cakes for £25 each. Variable costs are £10 per cake and fixed overhead costs are £3,000 per month. Calculate the break-even output in units.',
+        markSchemePoints: [
+          'Contribution per unit = Selling Price - Variable Cost = 25 - 10 = £15 (M1)',
+          'Break-even formula = Fixed Costs / Contribution per unit (M1)',
+          'Calculation = 3000 / 15 (M1)',
+          'Answer = 200 cakes per month (A1)',
+        ],
+      },
+    ],
+  },
+
+  // ===================== ACCOUNTING (4AC1) =====================
+  {
+    id: 'pl-acc-2024-june-01',
+    subjectId: 'accounting',
+    subjectCode: '4AC1',
+    subjectName: 'Accounting',
+    year: 2024,
+    session: 'June',
+    paperCode: '4AC1/01',
+    paperName: 'Paper 1: Introduction to Bookkeeping & Accounting',
+    tier: 'Standard',
+    durationMinutes: 120,
+    totalMarks: 100,
+    paperlordsSlug: 'edexcel-igcse-accounting-4ac1-2024-june-paper-1',
+    paperlordsUrl: OFFICIAL_PAPERLORDS_IGCSE_URL,
+    gradeBoundaries: {
+      grade9: 80,
+      grade8: 71,
+      grade7: 62,
+      grade6: 51,
+      grade4: 33,
+    },
+    keyTopics: ['Double-Entry Bookkeeping Principles', 'Trial Balance & Suspense Account Corrections', 'Depreciation Methods (Straight Line vs Reducing Balance)', 'Income Statement & Gross Profit Margin'],
+    examinerWarnings: [
+      'Always balance ledger accounts with Balance c/d and carry down Balance b/d to the next accounting period.',
+      'Errors of principle (e.g. charging machinery repairs to the Machinery asset account) do NOT affect the trial balance agreement.',
+    ],
+    sampleQuestions: [
+      {
+        number: 'Q1',
+        topic: 'Ledger Entries',
+        marks: 4,
+        questionText: 'State the debit and credit ledger entries required to record: (i) Payment of electricity bill by bank transfer £450, (ii) Owner withdraws goods £200 for personal use.',
+        markSchemePoints: [
+          '(i) Debit Electricity Expense £450 (1), Credit Bank Account £450 (1)',
+          '(ii) Debit Drawings Account £200 (1), Credit Purchases Account £200 (1)',
+        ],
+      },
+    ],
+  },
+
+  // ===================== HUMAN BIOLOGY (4HB1) =====================
+  {
+    id: 'pl-hbio-2024-june-01',
+    subjectId: 'human_biology',
+    subjectCode: '4HB1',
+    subjectName: 'Human Biology',
+    year: 2024,
+    session: 'June',
+    paperCode: '4HB1/01',
+    paperName: 'Paper 1: Principles of Human Biology',
+    tier: 'Higher',
+    durationMinutes: 105,
+    totalMarks: 90,
+    paperlordsSlug: 'edexcel-igcse-human-biology-4hb1-2024-june-paper-1',
+    paperlordsUrl: OFFICIAL_PAPERLORDS_IGCSE_URL,
+    gradeBoundaries: {
+      grade9: 72,
+      grade8: 63,
+      grade7: 54,
+      grade6: 44,
+      grade4: 27,
+    },
+    keyTopics: ['Nephron & Ultrafiltration in Kidney', 'Cardiac Cycle & Coronary Heart Disease', 'Immune Response: Antigens & Antibodies', 'Homeostasis & Negative Feedback Loops'],
+    examinerWarnings: [
+      'In kidney function: blood enters via afferent arteriole (wider lumen) and leaves via efferent arteriole (narrower lumen), creating high hydrostatic pressure in glomerulus.',
+    ],
+    sampleQuestions: [
+      {
+        number: 'Q4',
+        topic: 'Excretion & Osmoregulation',
+        marks: 4,
+        questionText: 'Explain how the hormone ADH regulates the water content of blood when a person is dehydrated on a hot day.',
+        markSchemePoints: [
+          'Hypothalamus detects low blood water potential via osmoreceptors (1)',
+          'Pituitary gland releases more Antidiuretic Hormone (ADH) into the bloodstream (1)',
+          'ADH binds to receptors on collecting ducts, increasing permeability to water via aquaporins (1)',
+          'More water is reabsorbed by osmosis into medullary capillaries; concentrated urine with small volume is produced (1)',
+        ],
+      },
+    ],
+  },
+
+  // ===================== ENGLISH LANGUAGE A (4EA1) =====================
+  {
+    id: 'pl-englan-2024-june-01',
+    subjectId: 'english_language',
+    subjectCode: '4EA1',
+    subjectName: 'English Language A',
+    year: 2024,
+    session: 'June',
+    paperCode: '4EA1/01',
+    paperName: 'Paper 1: Non-fiction Texts and Transactional Writing',
+    tier: 'Standard',
+    durationMinutes: 135,
+    totalMarks: 90,
+    paperlordsSlug: 'edexcel-igcse-english-language-4ea1-2024-june-paper-1',
+    paperlordsUrl: OFFICIAL_PAPERLORDS_IGCSE_URL,
+    gradeBoundaries: {
+      grade9: 76,
+      grade8: 68,
+      grade7: 60,
+      grade6: 50,
+      grade4: 33,
+    },
+    keyTopics: ['Anthology Non-Fiction Analysis', 'Comparative Unseen Analysis', 'Transactional Writing: Speech, Letter, Article', 'Rhetorical Devices: Ethos, Pathos, Logos'],
+    examinerWarnings: [
+      'For Question 5 (Anthology comparison), integrate textual evidence continuously with close linguistic analysis rather than summarizing plots.',
+      'Adopt a clear and authentic register for Transactional Writing (e.g. speech to youth council vs formal letter to school board).',
+    ],
+    sampleQuestions: [
+      {
+        number: 'Q5',
+        topic: 'Anthology Non-Fiction Analysis',
+        marks: 12,
+        questionText: 'Analyze how the writer presents tension and survival in the extract from \'Between a Rock and a Hard Place\' by Aron Ralston. Refer to language and structural techniques.',
+        markSchemePoints: [
+          'Perceptive selection of evidence: analyzes precise verbs indicating kinetic danger ("ricochets", "crushes") (3)',
+          'Analysis of structure: shifts from technical climbing jargon to visceral present-tense sensory emergency (3)',
+          'Analysis of tone: clinical composure juxtaposed with escalating emotional dread (3)',
+          'Impact on reader: evokes claustrophobic urgency and suspense (3)',
+        ],
+      },
+    ],
+  },
+
+  // ===================== ENGLISH LITERATURE (4ET1) =====================
+  {
+    id: 'pl-englit-2024-june-01',
+    subjectId: 'english_literature',
+    subjectCode: '4ET1',
+    subjectName: 'English Literature',
+    year: 2024,
+    session: 'June',
+    paperCode: '4ET1/01',
+    paperName: 'Paper 1: Poetry and Modern Prose',
+    tier: 'Standard',
+    durationMinutes: 120,
+    totalMarks: 90,
+    paperlordsSlug: 'edexcel-igcse-english-literature-4et1-2024-june-paper-1',
+    paperlordsUrl: OFFICIAL_PAPERLORDS_IGCSE_URL,
+    gradeBoundaries: {
+      grade9: 77,
+      grade8: 69,
+      grade7: 61,
+      grade6: 51,
+      grade4: 34,
+    },
+    keyTopics: ['Edexcel Poetry Anthology (Conflict / Time)', 'Unseen Poetry Analysis', 'Modern Prose (Of Mice and Men, Animal Farm, To Kill a Mockingbird)', 'Social & Historical Contextualization (AO4)'],
+    examinerWarnings: [
+      'In poetry comparison, make direct thematic and structural links across both poems in every body paragraph.',
+    ],
+    sampleQuestions: [
+      {
+        number: 'Q3',
+        topic: 'Poetry Comparison',
+        marks: 30,
+        questionText: 'Compare how poets present the devastation of war in \'Exposure\' by Wilfred Owen and one other poem from the Conflict collection.',
+        markSchemePoints: [
+          'Critical, conceptualized response comparing cold despair in Owen with sensory horrors in complementary poem (8)',
+          'Detailed analysis of imagery, meter, stanza form, and auditory devices (half-rhymes, sibilance) (10)',
+          'Precise textual integration with short embedded quotations (6)',
+          'Exploration of World War I trench warfare context and critique of romanticized patriotism (6)',
+        ],
+      },
+    ],
+  },
+
+  // ===================== HISTORY (4HI1) =====================
+  {
+    id: 'pl-hist-2024-june-01',
+    subjectId: 'history',
+    subjectCode: '4HI1',
+    subjectName: 'History',
+    year: 2024,
+    session: 'June',
+    paperCode: '4HI1/01',
+    paperName: 'Paper 1: Depth Studies - Dictatorship & Conflict in Europe',
+    tier: 'Standard',
+    durationMinutes: 90,
+    totalMarks: 60,
+    paperlordsSlug: 'edexcel-igcse-history-4hi1-2024-june-paper-1',
+    paperlordsUrl: OFFICIAL_PAPERLORDS_IGCSE_URL,
+    gradeBoundaries: {
+      grade9: 49,
+      grade8: 43,
+      grade7: 38,
+      grade6: 31,
+      grade4: 20,
+    },
+    keyTopics: ['Weimar Republic Crises (1919–23)', 'Consolidation of Nazi Power (Reichstag Fire & Enabling Act)', 'Economic Policies (Schacht & Göring Four Year Plan)', 'Control & Resistance (Gestapo, SS, Edelweiss Pirates)'],
+    examinerWarnings: [
+      'For source utility questions: assess Nature, Origin, and Purpose (NOP) alongside your contextual historical knowledge.',
+    ],
+    sampleQuestions: [
+      {
+        number: 'Q2(c)',
+        topic: 'Weimar & Nazi Germany',
+        marks: 16,
+        questionText: 'Explain why the Nazi party was able to consolidate control over Germany in the period 1933–1934. In your answer refer to the Reichstag Fire, the Enabling Act, and the Night of the Long Knives.',
+        markSchemePoints: [
+          'Analytical focus on causal links leading to one-party totalitarian state (4)',
+          'Reichstag Fire: Decree for Protection of People and State suspended civil liberties, eliminated KPD (4)',
+          'Enabling Act: Legal dictator powers bypassing Reichstag, Gleichschaltung of trade unions (4)',
+          'Night of the Long Knives: Purged Ernst Röhm and SA leadership, secured Army loyalty (4)',
+        ],
+      },
+    ],
+  },
+
+  // ===================== GEOGRAPHY (4GE1) =====================
+  {
+    id: 'pl-geo-2024-june-01',
+    subjectId: 'geography',
+    subjectCode: '4GE1',
+    subjectName: 'Geography',
+    year: 2024,
+    session: 'June',
+    paperCode: '4GE1/01',
+    paperName: 'Paper 1: Physical Environments',
+    tier: 'Standard',
+    durationMinutes: 70,
+    totalMarks: 60,
+    paperlordsSlug: 'edexcel-igcse-geography-4ge1-2024-june-paper-1',
+    paperlordsUrl: OFFICIAL_PAPERLORDS_IGCSE_URL,
+    gradeBoundaries: {
+      grade9: 48,
+      grade8: 42,
+      grade7: 37,
+      grade6: 30,
+      grade4: 19,
+    },
+    keyTopics: ['River Processes & Bradshaw Model', 'Coastal Erosion & Soft/Hard Engineering', 'Hazardous Environments (Volcanoes & Tropical Cyclones)', 'Fieldwork Investigation Methods'],
+    examinerWarnings: [
+      'Clearly differentiate between hydraulic action (force of water into cracks) and abrasion (rocks hurled against riverbed/cliff).',
+    ],
+    sampleQuestions: [
+      {
+        number: 'Q1(d)',
+        topic: 'River Landforms',
+        marks: 4,
+        questionText: 'Explain the formation of an oxbow lake. You may draw an annotated diagram to support your answer.',
+        markSchemePoints: [
+          'Meander neck narrows due to continuous erosion on the outside bend (hydraulic action & abrasion) and deposition on inside bend (1)',
+          'During high discharge or flood events, river cuts directly through narrow neck taking straight path of least resistance (1)',
+          'Water in old meander loop stagnates; deposition seals off loop ends with sediment (1)',
+          'Crescent-shaped body of standing water left isolated as an oxbow lake (1)',
+        ],
+      },
+    ],
+  },
+  // ===================== COMMERCE (4CM1) =====================
+  {
+    id: 'pl-comm-2024-june-01',
+    subjectId: 'commerce',
+    subjectCode: '4CM1',
+    subjectName: 'Commerce',
+    year: 2024,
+    session: 'June',
+    paperCode: '4CM1/01',
+    paperName: 'Paper 1: Commercial Operations and International Trade',
+    tier: 'Standard',
+    durationMinutes: 90,
+    totalMarks: 80,
+    paperlordsSlug: 'edexcel-igcse-commerce-4cm1-2024-june-paper-1',
+    paperlordsUrl: OFFICIAL_PAPERLORDS_IGCSE_URL,
+    gradeBoundaries: {
+      grade9: 65,
+      grade8: 58,
+      grade7: 51,
+      grade6: 42,
+      grade4: 28,
+    },
+    keyTopics: ['Wholesale and Retail Distribution', 'International Trade Documents (Bill of Lading, Letter of Credit)', 'Banking Services & E-Commerce Payments', 'Insurance Principles (Indemnity, Utmost Good Faith)'],
+    examinerWarnings: [
+      'Candidates must distinguish between insurable risks (fire, theft) and non-insurable speculative business risks.',
+      'Explain the exact role of a Letter of Credit in mitigating non-payment risks in international sea freight.',
+    ],
+    sampleQuestions: [
+      {
+        number: 'Q2(b)',
+        topic: 'International Trade Finance',
+        marks: 4,
+        questionText: 'Explain the importance of a Letter of Credit (L/C) issued by an international bank for an exporter shipping machinery overseas.',
+        markSchemePoints: [
+          'Guarantees payment to exporter upon presentation of verified shipping documents (1)',
+          'Reduces risk of importer defaulting on payment before arrival of goods (1)',
+          'Allows exporter to secure trade financing against verified credit (1)',
+          'Provides security for buyer ensuring goods are shipped as contracted before funds released (1)',
+        ],
+        examinerTip: 'Clearly identify that the issuing bank acts as intermediary guaranteeing payment upon compliance.',
+      },
+      {
+        number: 'Q4',
+        topic: 'Insurance Principles',
+        marks: 5,
+        questionText: 'Explain how the principle of indemnity and the principle of utmost good faith (uberrimae fidei) protect both the insured trader and the insurer.',
+        markSchemePoints: [
+          'Indemnity restores the insured to their exact pre-loss financial position without making a profit (2)',
+          'Prevents intentional insurance fraud or deliberate destruction of insured commercial assets (1)',
+          'Utmost good faith requires full and honest disclosure of all material facts by the trader (1)',
+          'Allows insurer to accurately assess risk and set appropriate premium rates (1)',
+        ],
+      },
+    ],
+  },
+
 ];
